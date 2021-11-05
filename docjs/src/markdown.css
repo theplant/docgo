@@ -1,0 +1,132 @@
+h2 {
+    font-size: 1.88235rem;
+    line-height: 1.125;
+    font-weight: 500;
+    letter-spacing: .013em;
+
+}
+
+@media only screen and (max-width: 1068px) {
+    h2 {
+        font-size: 1.64706rem;
+        line-height: 1.14286;
+        font-weight: 500;
+        letter-spacing: .007em;
+    }
+}
+
+@media only screen and (max-width: 735px) {
+    h2 {
+        font-size: 1.41176rem;
+        line-height: 1.16667;
+        font-weight: 500;
+        letter-spacing: .009em;
+    }
+}
+
+h3 {
+    font-size: 1.64706rem;
+    line-height: 1.14286;
+    font-weight: 500;
+    letter-spacing: .007em;
+}
+
+@media only screen and (max-width: 1068px) {
+    h3 {
+        font-size: 1.41176rem;
+        line-height: 1.16667;
+        font-weight: 500;
+        letter-spacing: .009em;
+    }
+}
+
+@media only screen and (max-width: 735px) {
+    h3 {
+        font-size: 1.23529rem;
+        line-height: 1.19048;
+        font-weight: 500;
+        letter-spacing: .011em;
+    }
+}
+
+h4 {
+    font-size: 1.41176rem;
+    line-height: 1.16667;
+    font-weight: 500;
+    letter-spacing: .009em;
+}
+
+@media only screen and (max-width: 1068px) {
+    h4 {
+        font-size: 1.23529rem;
+        line-height: 1.19048;
+        font-weight: 500;
+        letter-spacing: .011em;
+    }
+}
+
+h5 {
+    font-size: 1.29412rem;
+    line-height: 1.18182;
+    font-weight: 500;
+    letter-spacing: .01em;
+}
+
+@media only screen and (max-width: 1068px) {
+    h5 {
+        font-size: 1.17647rem;
+        line-height: 1.2;
+        font-weight: 500;
+        letter-spacing: .011em;
+    }
+}
+
+@media only screen and (max-width: 735px) {
+    h5 {
+        font-size: 1.05882rem;
+        line-height: 1.44444;
+        font-weight: 500;
+        letter-spacing: .012em;
+    }
+}
+
+h6 {
+    font-size: 1rem;
+    line-height: 1.47059;
+    font-weight: 500;
+    letter-spacing: -.022em;
+}
+
+img {
+    display: block;
+    margin: 1.6em auto;
+    max-width: 100%
+}
+
+ol,
+ul {
+    margin-top: .8em;
+    margin-left: 2rem
+}
+
+ol li:not(:first-child),
+ul li:not(:first-child) {
+    margin-top: .8em
+}
+
+@media only screen and (max-width: 735px) {
+    ol,
+    ul {
+        margin-left: 1.25rem
+    }
+}
+
+dl,
+dl + *,
+dt:not(:first-child) {
+    margin-top: .8em
+}
+
+dd {
+    margin-left: 2em
+}
