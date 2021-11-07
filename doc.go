@@ -38,17 +38,13 @@ func (b *DocBuilder) ArticleTree() (r *ArticleNode) {
 	return b.articleTree
 }
 
-type contextKey int
-
-const articleNodeKey contextKey = iota
-
 func (b *DocBuilder) Build() (r *DocBuilder) {
-	ctx := context.WithValue(context.TODO(), articleNodeKey, &ArticleNode{})
+	ctx := context.TODO()
 	_, err := b.home.MarshalHTML(ctx)
 	if err != nil {
 		panic(err)
 	}
-	b.articleTree = ctx.Value(articleNodeKey).(*ArticleNode)
+	b.articleTree = b.home.node
 	return b
 }
 

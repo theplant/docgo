@@ -3,6 +3,7 @@ module github.com/theplant/docgo
 go 1.17
 
 require (
+	github.com/iancoleman/strcase v0.2.0
 	github.com/shurcooL/github_flavored_markdown v0.0.0-20210228213109-c3a9aa474629
 	github.com/theplant/htmlgo v1.0.3
 	github.com/theplant/testingutils v0.0.0-20190603093022-26d8b4d95c61

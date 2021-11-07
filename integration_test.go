@@ -20,11 +20,27 @@ func TestHello(t *testing.T) {
 	var tree = s.ArticleTree()
 
 	expected := &ArticleNode{
-		Title: "Formatting Your Documentation Content",
-		URI:   "formatting-your-documentation-content",
+		Title:    "Formatting Your Documentation Content",
+		URI:      "formatting-your-documentation-content",
+		Abstract: "Enhance your content’s presentation with special formatting and styling for text, links, and other page elements.",
 		ChildNodes: []*ArticleNode{
 			{
 				Title: "Article 1",
+				URI:   "article-1",
+				ChildNodes: []*ArticleNode{
+					{
+						Title: "Article 1.1",
+						URI:   "article-1-1",
+					},
+				},
+			},
+			{
+				Title: "Article 2",
+				URI:   "article-2",
+			},
+			{
+				Title: "Article 3",
+				URI:   "article-3",
 			},
 		},
 	}
