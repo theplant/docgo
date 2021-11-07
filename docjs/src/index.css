@@ -3,7 +3,7 @@
 @tailwind utilities;
 @layer base {
     body {
-        @apply text-base tracking-wide leading-relaxed;
+        @apply text-lg font-light tracking-wide leading-relaxed;
     }
 
     h1 {
@@ -21,4 +21,17 @@
     p {
         @apply mt-4;
     }
+
+    ul {
+        @apply list-disc mx-8;
+    }
+
+    ol {
+        @apply list-decimal mx-8;
+    }
+
+    img {
+        @apply my-6 mx-auto;
+    }
+
 }

@@ -12,7 +12,7 @@
 
         <div class="primary-content w-9/12">
 
-          <div class="mb-8">Create rich and engaging documentation from your in-source comments, and add a
+          <div class="mb-8 text-xl font-light">Create rich and engaging documentation from your in-source comments, and add a
             documentation
             catalog to your project to provide additional content.
           </div>
@@ -63,43 +63,41 @@
 
 
             <div class="code-listing">
-        <pre>
-123123
-        </pre>
-
+        <pre>123123</pre>
             </div>
 
-            <aside aria-label="note" class="note">
-              <p class="label">Note</p>
-              <p>For existing framework projects, the build setting appears only after you add a documentation catalog.
+            <aside aria-label="note" class="note mt-6 p-4 rounded-2xl bg-gray-50 border border-gray-400 shadow">
+              <label class="text-gray-700 font-normal">Note</label>
+              <p class="mt-2">For existing framework projects, the build setting appears only after you add a documentation catalog.
                 You
                 can’t use the build setting with a Swift package.</p>
             </aside>
 
-            <aside aria-label="important" class="important">
-              <p class="label">Important</p>
-              <p>For existing framework projects, the build setting appears only after you add a documentation catalog.
+            <aside aria-label="important" class="important mt-6 p-4 rounded-2xl bg-yellow-50 border border-yellow-700 shadow">
+              <label class="text-yellow-700 font-normal">Important</label>
+              <p class="mt-2">For existing framework projects, the build setting appears only after you add a documentation catalog.
                 You
                 can’t use the build setting with a Swift package.</p>
             </aside>
 
-            <aside aria-label="deprecated" class="deprecated">
-              <p class="label">Deprecated</p>
-              <p>For existing framework projects, the build setting appears only after you add a documentation catalog.
+            <aside aria-label="deprecated" class="deprecated mt-6 p-4 rounded-2xl bg-pink-50 border border-yellow-700 shadow">
+              <label class="text-yellow-700 font-normal">Deprecated</label>
+
+              <p class="mt-2">For existing framework projects, the build setting appears only after you add a documentation catalog.
                 You
                 can’t use the build setting with a Swift package.</p>
             </aside>
 
-            <aside aria-label="experiment" class="experiment">
-              <p class="label">Experiment</p>
-              <p>For existing framework projects, the build setting appears only after you add a documentation catalog.
+            <aside aria-label="experiment" class="experiment mt-6 p-4 rounded-2xl bg-purple-50 border border-purple-800 shadow">
+              <label class="text-purple-800 font-normal">Experiment</label>
+              <p class="mt-2">For existing framework projects, the build setting appears only after you add a documentation catalog.
                 You
                 can’t use the build setting with a Swift package.</p>
             </aside>
 
-            <aside aria-label="tip" class="tip">
-              <p class="label">Tip</p>
-              <p>For existing framework projects, the build setting appears only after you add a documentation catalog.
+            <aside aria-label="tip" class="tip mt-6 p-4 rounded-2xl bg-green-50 border border-green-700 shadow">
+              <label class="text-green-700 font-normal">Tip</label>
+              <p class="mt-2">For existing framework projects, the build setting appears only after you add a documentation catalog.
                 You
                 can’t use the build setting with a Swift package.</p>
             </aside>
