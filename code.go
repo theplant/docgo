@@ -11,7 +11,7 @@ type CodeBuilder struct {
 	code string
 }
 
-func Code(code string) (r *CodeBuilder) {
+func Program(code string) (r *CodeBuilder) {
 	r = &CodeBuilder{
 		tag: h.Tag("bran-code"),
 	}
