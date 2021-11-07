@@ -34,4 +34,8 @@
         @apply my-6 mx-auto;
     }
 
+    a {
+        @apply text-blue-700;
+    }
+
 }
