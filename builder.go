@@ -8,13 +8,13 @@ import (
 	"sort"
 	"time"
 
-	h "github.com/theplant/htmlgo"
+	. "github.com/theplant/htmlgo"
 )
 
 type Builder struct {
 	home        *DocBuilder
-	header      h.HTMLComponent
-	footer      h.HTMLComponent
+	header      HTMLComponent
+	footer      HTMLComponent
 	articleTree *DocNode
 	mux         *http.ServeMux
 	mounts      []*mount
@@ -30,12 +30,12 @@ func (b *Builder) Home(v *DocBuilder) (r *Builder) {
 	return b
 }
 
-func (b *Builder) Header(v h.HTMLComponent) (r *Builder) {
+func (b *Builder) Header(v HTMLComponent) (r *Builder) {
 	b.header = v
 	return b
 }
 
-func (b *Builder) Footer(v h.HTMLComponent) (r *Builder) {
+func (b *Builder) Footer(v HTMLComponent) (r *Builder) {
 	b.footer = v
 	return b
 }
@@ -61,18 +61,50 @@ func (b *Builder) Build() (r *Builder) {
 	return b
 }
 
-func (b *Builder) layout(body h.HTMLComponent) (r h.HTMLComponent) {
-	return h.HTML(
-		h.Head(
-			h.Link("/index.css").Rel("stylesheet").Type("text/css"),
+func (b *Builder) layout(body *DocBuilder) (r HTMLComponent) {
+	return HTML(
+		Head(
+			Link("/index.css").Rel("stylesheet").Type("text/css"),
 			// h.Script("").Src("/index.js"),
 		),
-		h.Body(
+		Body(
 			b.header,
+			b.navigation(body),
 			body,
 			b.footer,
 		),
 	)
+}
+
+func (b *Builder) navigation(doc *DocBuilder) (r HTMLComponent) {
+	if doc.node == nil {
+		return
+	}
+	var items = []*DocNode{doc.node}
+	var current = doc.node
+	for current.ParentNode != nil {
+		current = current.ParentNode
+		items = append(items, current)
+	}
+
+	content := Ul().Attr("aria-label", "Breadcrumbs").
+		Class("flex list-none lg:max-w-5xl mx-auto px-10")
+
+	for i := len(items) - 1; i >= 0; i-- {
+		content.AppendChildren(
+			Li(
+				If(i < (len(items)-1),
+					Div(
+						arrowIcon,
+					).Class("w-3 m-2 flex fill-current text-gray-500"),
+				),
+				A().Href(items[i].AbsoluteURI).Text(items[i].Title).
+					Class("text-gray-50"),
+			).Class("inline-flex"),
+		)
+	}
+
+	return Nav(content).Class("bg-gray-700 py-3 text-base font-normal mb-8")
 }
 
 var startTime = time.Now()
@@ -101,7 +133,7 @@ func (b *Builder) addToMounts(node *DocNode) {
 	// println(node.AbsoluteURI)
 	b.mounts = append(b.mounts,
 		&mount{node.AbsoluteURI, func(w http.ResponseWriter, r *http.Request) {
-			err := h.Fprint(w, b.layout(node.Doc), context.TODO())
+			err := Fprint(w, b.layout(node.Doc), context.TODO())
 			if err != nil {
 				panic(err)
 			}
@@ -141,3 +173,7 @@ func (b *Builder) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	b.mux.ServeHTTP(w, r)
 	return
 }
+
+var arrowIcon = RawHTML(`
+<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" data-v-134594fd="" data-v-838665fe=""><path data-v-7abeccde="" d="m4.81347656 13.1269531c.22558594 0 .41015625-.0820312.56738282-.2324219l5.31835942-5.19531245c.1845703-.19140625.2802734-.38964844.2802734-.63574219 0-.23925781-.0888672-.45117187-.2802734-.62890625l-5.31835942-5.20214843c-.15722657-.15039063-.34179688-.23242188-.56738282-.23242188-.45800781 0-.81347656.35546875-.81347656.80664062 0 .21875.09570312.43066407.24609375.58789063l4.79199219 4.67578125-4.79199219 4.6621094c-.15722656.1640625-.24609375.3623047-.24609375.5878906 0 .4511719.35546875.8066406.81347656.8066406z"></path></svg>
+`)

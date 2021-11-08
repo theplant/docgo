@@ -3,11 +3,6 @@ package docs
 import . "github.com/theplant/docgo"
 
 var Home = Doc(
-	Markdown(`
-# Build beautiful documentation
-
-
-`),
 
 	Markdown(`
 ## Overview
@@ -47,7 +42,7 @@ A common characteristic of a well-crafted API is that it’s easy to read and pr
 	).
 	Title("docgo Documentation").
 	URI("/").
-	AbstractText(`Use go code in declarative way to create beautiful documentation`)
+	AbstractText(`Write documentation with go code in a declarative way to create beautiful documentation`)
 
 var article1 = Doc().Tables(
 	ContentTable(

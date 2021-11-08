@@ -3,6 +3,30 @@
 </script>
 
 <template>
+  <nav class="bg-gray-700 py-3 text-base font-normal mb-8">
+    <ul aria-label="Breadcrumbs" class="flex list-none lg:max-w-5xl mx-auto px-10">
+      <li class="inline-flex">
+
+
+        <a class="text-gray-50" href="/">docgo Documentation</a>
+      </li>
+
+      <li class="inline-flex">
+        <div class="w-3 m-2 flex fill-current text-gray-500">
+          <svg aria-hidden="true" data-v-134594fd="" data-v-838665fe="" viewBox="0 0 14 14"
+               xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="m4.81347656 13.1269531c.22558594 0 .41015625-.0820312.56738282-.2324219l5.31835942-5.19531245c.1845703-.19140625.2802734-.38964844.2802734-.63574219 0-.23925781-.0888672-.45117187-.2802734-.62890625l-5.31835942-5.20214843c-.15722657-.15039063-.34179688-.23242188-.56738282-.23242188-.45800781 0-.81347656.35546875-.81347656.80664062 0 .21875.09570312.43066407.24609375.58789063l4.79199219 4.67578125-4.79199219 4.6621094c-.15722656.1640625-.24609375.3623047-.24609375.5878906 0 .4511719.35546875.8066406.81347656.8066406z"
+                data-v-7abeccde=""></path>
+          </svg>
+        </div>
+
+
+        <a class="text-gray-50" href="/doc-1">Doc 1</a>
+      </li>
+    </ul>
+  </nav>
+
   <main class="lg:max-w-5xl mx-auto px-10">
     <h1>Documenting a Swift Framework or Package</h1>
     <div class="sm:flex mt-8 mb-16">
