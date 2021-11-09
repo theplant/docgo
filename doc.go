@@ -115,7 +115,7 @@ func (b *DocBuilder) MarshalHTML(ctx context.Context) ([]byte, error) {
 					// abstract
 					Div(
 						Text(b.abstractText),
-					).Class("mb-8 text-xl font-light"),
+					).Class("mb-8 text-xl font-normal"),
 
 					Div(
 						b.children...,

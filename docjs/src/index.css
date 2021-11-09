@@ -3,7 +3,7 @@
 @tailwind utilities;
 @layer base {
     body {
-        @apply text-lg font-light tracking-wide leading-relaxed;
+        @apply text-lg font-normal tracking-wide leading-relaxed text-gray-800;
     }
 
     h1 {
@@ -59,7 +59,7 @@
     }
 
     pre code.hljs {
-        @apply bg-transparent text-sm font-light block p-4;
+        @apply bg-transparent text-base font-light block p-4;
     }
 
 }
