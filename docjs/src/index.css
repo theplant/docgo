@@ -46,6 +46,14 @@
         @apply list-decimal mx-8;
     }
 
+    .toc ul {
+        @apply list-none text-sm font-normal ml-4;
+    }
+
+    .toc li {
+        @apply mt-2;
+    }
+
     img {
         @apply mt-6 mx-auto;
     }

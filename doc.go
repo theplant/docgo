@@ -3,6 +3,7 @@ package docgo
 import (
 	"context"
 	"path/filepath"
+	"strings"
 
 	"github.com/iancoleman/strcase"
 	. "github.com/theplant/htmlgo"
@@ -53,6 +54,15 @@ func (b *DocBuilder) URI(v string) (r *DocBuilder) {
 func (b *DocBuilder) AbstractText(v string) (r *DocBuilder) {
 	b.abstractText = v
 	return b
+}
+
+func (b *DocBuilder) GetPageTitle() (r string) {
+	items := parentDocNodes(b)
+	var segs []string
+	for _, item := range items {
+		segs = append(segs, item.Title)
+	}
+	return strings.Join(segs, " - ")
 }
 
 func (b *DocBuilder) ContentGroupItem(ctx context.Context) (r HTMLComponent) {
@@ -123,10 +133,11 @@ func (b *DocBuilder) MarshalHTML(ctx context.Context) ([]byte, error) {
 				).Class("sm:w-9/12"),
 				Div(
 					Text("On This Page"),
-				).Class("sm:w-3/12 font-medium text-base"),
+					RawHTML("<toc></toc>"),
+				).Class("ml-4 sm:w-3/12 font-medium text-base hidden sm:block text-gray-600"),
 			).Class("sm:flex mt-8 mb-16"),
 		).Class("lg:max-w-5xl mx-auto px-10"),
-		Components(b.tables...),
+		Div(b.tables...).Class("pt-4 pb-16 bg-gray-50"),
 	).
 		MarshalHTML(ctx)
 }

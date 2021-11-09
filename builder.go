@@ -68,6 +68,9 @@ func (b *Builder) Build() (r *Builder) {
 func (b *Builder) layout(body *DocBuilder) (r HTMLComponent) {
 	return HTML(
 		Head(
+			Title(body.GetPageTitle()),
+			Meta().Name("description").Content(body.abstractText),
+			RawHTML(`<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">`),
 			Link("/index.css").Rel("stylesheet").Type("text/css"),
 			Script("").Attr("defer", true).Src("/index.js"),
 		),
@@ -77,21 +80,15 @@ func (b *Builder) layout(body *DocBuilder) (r HTMLComponent) {
 				b.navigation(body),
 				body,
 				b.footer,
-			).Id("app").Attr("v-cloak", true),
+			).Id("app").
+				Attr("v-cloak", true),
 		),
 	)
 }
 
 func (b *Builder) navigation(doc *DocBuilder) (r HTMLComponent) {
-	if doc.node == nil {
-		return
-	}
-	var items = []*DocNode{doc.node}
-	var current = doc.node
-	for current.ParentNode != nil {
-		current = current.ParentNode
-		items = append(items, current)
-	}
+
+	items := parentDocNodes(doc)
 
 	content := Div().Attr("aria-label", "Breadcrumbs").
 		Class("flex list-none lg:max-w-5xl mx-auto px-10")
@@ -111,6 +108,20 @@ func (b *Builder) navigation(doc *DocBuilder) (r HTMLComponent) {
 	}
 
 	return Nav(content).Class("bg-gray-700 py-3 text-base font-normal mb-8")
+}
+
+func parentDocNodes(doc *DocBuilder) []*DocNode {
+	if doc.node == nil {
+		return []*DocNode{}
+	}
+
+	var items = []*DocNode{doc.node}
+	var current = doc.node
+	for current.ParentNode != nil {
+		current = current.ParentNode
+		items = append(items, current)
+	}
+	return items
 }
 
 var startTime = time.Now()
