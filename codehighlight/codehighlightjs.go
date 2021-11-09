@@ -1,4 +1,4 @@
-package docgo
+package codehighlight
 
 import (
 	"embed"
@@ -6,11 +6,11 @@ import (
 	"github.com/goplaid/web"
 )
 
-//go:embed docjs/dist/*.*
-var box embed.FS
+//go:embed codehighlightjs/dist
+var assetsbox embed.FS
 
 func JSComponentsPack() web.ComponentsPack {
-	v, err := box.ReadFile("docjs/dist/docgo.umd.min.js")
+	v, err := assetsbox.ReadFile("codehighlightjs/dist/codehighlight.umd.min.js")
 	if err != nil {
 		panic(err)
 	}
@@ -19,7 +19,7 @@ func JSComponentsPack() web.ComponentsPack {
 }
 
 func CSSComponentsPack() web.ComponentsPack {
-	v, err := box.ReadFile("docjs/dist/docgo.css")
+	v, err := assetsbox.ReadFile("codehighlightjs/dist/codehighlight.css")
 	if err != nil {
 		panic(err)
 	}

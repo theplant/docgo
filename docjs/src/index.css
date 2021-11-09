@@ -26,16 +26,40 @@
         @apply list-disc mx-8;
     }
 
+    ul li {
+        @apply mt-4;
+    }
+
+    ol li {
+        @apply mt-4;
+    }
+
+    ul li p:first-child {
+        @apply mt-0;
+    }
+
+    ol li p:first-child {
+        @apply mt-0;
+    }
+
     ol {
         @apply list-decimal mx-8;
     }
 
     img {
-        @apply my-6 mx-auto;
+        @apply mt-6 mx-auto;
     }
 
     a {
         @apply text-blue-700;
+    }
+
+    pre {
+        @apply bg-gray-100 rounded-2xl p-2 mt-6 overflow-auto;
+    }
+
+    pre code.hljs {
+        @apply bg-transparent text-sm font-light block p-4;
     }
 
 }

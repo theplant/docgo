@@ -1,13 +1,14 @@
 package docgo
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"net/http"
 	"sort"
 	"time"
 
+	"github.com/goplaid/web"
+	"github.com/theplant/docgo/codehighlight"
 	. "github.com/theplant/htmlgo"
 )
 
@@ -18,10 +19,13 @@ type Builder struct {
 	articleTree *DocNode
 	mux         *http.ServeMux
 	mounts      []*mount
+	builder     *web.Builder
 }
 
 func New() (r *Builder) {
-	r = &Builder{}
+	r = &Builder{
+		builder: web.New(),
+	}
 	return
 }
 
@@ -65,13 +69,15 @@ func (b *Builder) layout(body *DocBuilder) (r HTMLComponent) {
 	return HTML(
 		Head(
 			Link("/index.css").Rel("stylesheet").Type("text/css"),
-			// h.Script("").Src("/index.js"),
+			Script("").Attr("defer", true).Src("/index.js"),
 		),
 		Body(
-			b.header,
-			b.navigation(body),
-			body,
-			b.footer,
+			Div(
+				b.header,
+				b.navigation(body),
+				body,
+				b.footer,
+			).Id("app").Attr("v-cloak", true),
 		),
 	)
 }
@@ -87,12 +93,12 @@ func (b *Builder) navigation(doc *DocBuilder) (r HTMLComponent) {
 		items = append(items, current)
 	}
 
-	content := Ul().Attr("aria-label", "Breadcrumbs").
+	content := Div().Attr("aria-label", "Breadcrumbs").
 		Class("flex list-none lg:max-w-5xl mx-auto px-10")
 
 	for i := len(items) - 1; i >= 0; i-- {
 		content.AppendChildren(
-			Li(
+			Div(
 				If(i < (len(items)-1),
 					Div(
 						arrowIcon,
@@ -147,22 +153,18 @@ func (b *Builder) addToMounts(node *DocNode) {
 func (b *Builder) initMuxWithStatic() {
 	if b.mux == nil {
 		b.mux = http.NewServeMux()
-		js1, _ := box.ReadFile("docjs/dist/vendor.js")
-		js2, _ := box.ReadFile("docjs/dist/index.js")
-		css, _ := box.ReadFile("docjs/dist/index.css")
-		js := bytes.NewBuffer(js1)
-		js.WriteString(";\n")
-		js.Write(js2)
 
-		b.mux.HandleFunc("/index.js", func(w http.ResponseWriter, r *http.Request) {
-			w.Header().Set("Content-Type", "text/javascript")
-			http.ServeContent(w, r, "", startTime, bytes.NewReader(js.Bytes()))
-		})
+		b.mux.Handle("/index.js",
+			b.builder.PacksHandler("text/javascript",
+				web.JSVueComponentsPack(),
+				codehighlight.JSComponentsPack(),
+				JSComponentsPack(),
+				web.JSComponentsPack()))
 
-		b.mux.HandleFunc("/index.css", func(w http.ResponseWriter, r *http.Request) {
-			w.Header().Set("Content-Type", "text/css")
-			http.ServeContent(w, r, "", startTime, bytes.NewReader(css))
-		})
+		b.mux.Handle("/index.css", b.builder.PacksHandler("text/css",
+			codehighlight.CSSComponentsPack(),
+			CSSComponentsPack(),
+		))
 	}
 }
 

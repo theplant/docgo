@@ -3,6 +3,7 @@ module github.com/theplant/docgo
 go 1.17
 
 require (
+	github.com/goplaid/web v1.1.18
 	github.com/iancoleman/strcase v0.2.0
 	github.com/shurcooL/github_flavored_markdown v0.0.0-20210228213109-c3a9aa474629
 	github.com/theplant/htmlgo v1.0.3
@@ -10,7 +11,9 @@ require (
 )
 
 require (
+	github.com/NYTimes/gziphandler v1.1.1 // indirect
 	github.com/aymerick/douceur v0.2.0 // indirect
+	github.com/go-playground/form v3.1.4+incompatible // indirect
 	github.com/gorilla/css v1.0.0 // indirect
 	github.com/kr/pretty v0.3.0 // indirect
 	github.com/microcosm-cc/bluemonday v1.0.16 // indirect
@@ -25,5 +28,6 @@ require (
 	github.com/shurcooL/sanitized_anchor_name v1.0.0 // indirect
 	github.com/sourcegraph/annotate v0.0.0-20160123013949-f4cad6c6324d // indirect
 	github.com/sourcegraph/syntaxhighlight v0.0.0-20170531221838-bd320f5d308e // indirect
+	github.com/sunfmin/reflectutils v1.0.2 // indirect
 	golang.org/x/net v0.0.0-20211105192438-b53810dc28af // indirect
 )

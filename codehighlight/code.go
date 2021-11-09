@@ -1,4 +1,4 @@
-package docgo
+package codehighlight
 
 import (
 	"context"
@@ -11,7 +11,7 @@ type CodeBuilder struct {
 	code string
 }
 
-func Program(code string) (r *CodeBuilder) {
+func Code(code string) (r *CodeBuilder) {
 	r = &CodeBuilder{
 		tag: h.Tag("bran-code"),
 	}

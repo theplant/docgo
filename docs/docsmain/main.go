@@ -9,6 +9,7 @@ import (
 	"github.com/theplant/docgo/docs"
 )
 
+// @snippet_begin(BootUpDevSample)
 func main() {
 	port := os.Getenv("PORT")
 	if len(port) == 0 {
@@ -24,3 +25,5 @@ func main() {
 		panic(err)
 	}
 }
+
+// @snippet_end
