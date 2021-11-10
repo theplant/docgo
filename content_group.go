@@ -23,9 +23,9 @@ func (b *ContentGroupBuilder) Title(v string) (r *ContentGroupBuilder) {
 	return b
 }
 
-func (b *ContentGroupBuilder) MarshalHTML(ctx context.Context) ([]byte, error) {
+func (b *ContentGroupBuilder) MarshalHTML(ctx context.Context) (r []byte, err error) {
 	if len(b.docs) == 0 {
-		return nil, nil
+		return
 	}
 	var vs []HTMLComponent
 	for _, d := range b.docs {

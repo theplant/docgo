@@ -27,7 +27,7 @@ func (n *DocNode) AddChild(child *DocNode) {
 
 type DocBuilder struct {
 	title        string
-	uri          string
+	slug         string
 	abstractText string
 	node         *DocNode
 	children     []HTMLComponent
@@ -46,8 +46,8 @@ func (b *DocBuilder) Title(v string) (r *DocBuilder) {
 	return b
 }
 
-func (b *DocBuilder) URI(v string) (r *DocBuilder) {
-	b.uri = v
+func (b *DocBuilder) Slug(v string) (r *DocBuilder) {
+	b.slug = v
 	return b
 }
 
@@ -66,8 +66,15 @@ func (b *DocBuilder) GetPageTitle() (r string) {
 }
 
 func (b *DocBuilder) ContentGroupItem(ctx context.Context) (r HTMLComponent) {
-	b.buildArticleNode()
+	collectChildren, _ := ctx.Value(collectChildrenKey).(bool)
+	if collectChildren {
+		b.buildArticleNode()
+	}
 	_, _ = b.MarshalHTML(ctx) // for build up doc node tree
+
+	if b.node == nil {
+		return
+	}
 
 	r = Div(
 		A(
@@ -92,13 +99,13 @@ func (b *DocBuilder) buildArticleNode() (r *DocNode) {
 	if b.node != nil {
 		return b.node
 	}
-	if len(b.uri) == 0 {
-		b.uri = strcase.ToKebab(b.title)
+	if len(b.slug) == 0 {
+		b.slug = strcase.ToKebab(b.title)
 	}
 	b.node = &DocNode{
 		Title:       b.title,
-		URI:         b.uri,
-		AbsoluteURI: filepath.Join("/", b.uri),
+		URI:         b.slug,
+		AbsoluteURI: filepath.Join("/", b.slug),
 		Abstract:    b.abstractText,
 		Doc:         b,
 	}
@@ -107,29 +114,38 @@ func (b *DocBuilder) buildArticleNode() (r *DocNode) {
 
 type contextKey int
 
-const articleNodeKey contextKey = iota
+const (
+	articleNodeKey contextKey = iota
+	collectChildrenKey
+)
 
 func (b *DocBuilder) MarshalHTML(ctx context.Context) ([]byte, error) {
+	collectChildren, _ := ctx.Value(collectChildrenKey).(bool)
 
 	b.node = b.buildArticleNode()
 	parent, ok := ctx.Value(articleNodeKey).(*DocNode)
-	if ok {
-		parent.AddChild(b.node)
+
+	if collectChildren {
+		if ok {
+			parent.AddChild(b.node)
+		}
 	}
 	ctx = context.WithValue(ctx, articleNodeKey, b.node)
+
 	return Div(
 		Main(
 			H1(b.title),
 			Div(
 				Div(
 					// abstract
-					Div(
-						Text(b.abstractText),
-					).Class("mb-8 text-xl font-normal"),
-
+					If(len(b.abstractText) > 0,
+						Div(
+							Text(b.abstractText),
+						).Class("mb-8 text-xl font-normal"),
+					),
 					Div(
 						b.children...,
-					).Class("pt-8 border-t"),
+					).Class("border-t"),
 				).Class("sm:w-9/12"),
 				Div(
 					Text("On This Page"),
@@ -137,9 +153,11 @@ func (b *DocBuilder) MarshalHTML(ctx context.Context) ([]byte, error) {
 				).Class("ml-4 sm:w-3/12 font-medium text-base hidden sm:block text-gray-600"),
 			).Class("sm:flex mt-8 mb-16"),
 		).Class("lg:max-w-5xl mx-auto px-10"),
-		Div(b.tables...).Class("pt-4 pb-16 bg-gray-50"),
-	).
-		MarshalHTML(ctx)
+
+		If(len(b.tables) > 0,
+			Div(b.tables...).Class("pt-4 pb-16 bg-gray-50"),
+		),
+	).MarshalHTML(ctx)
 }
 
 var docIcon = RawHTML(`

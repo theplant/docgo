@@ -19,69 +19,57 @@ The developer community often use markdown or in Python world use [Sphinx](https
 - Make developer focus on writing documentation, instead of worrying about document styles, the default document styles is following the [Swift DocC](https://github.com/apple/swift-docc) with minor changes. So we think it is good enough for most projects
 
 `),
+	H2("Getting Started"),
 	P(
 		Text("The following code is used to build this doc"),
 		DocLink(HelloWorld),
 	),
 	ch.Code(HelloWorldSample).Language("go"),
 	P(
-		Text("Use the following code to boot up your doc app"),
+		Markdown("Use the following code to boot up your doc app, Suppose you have already created a `Home` Doc in docs package."),
 		ch.Code(BootUpDevSample).Language("go"),
 	),
+
+	Markdown(`
+## Children Docs
+
+Use ~ChildrenTable(...)~ to put other docs into current doc page children, The doc url will reflect the hierarchy, children docs url will contain parent doc slug
+`),
+	ch.Code(HelloWorldWithChildrenSample).Language("go"),
+	Text("Check out this link to see how it works"),
+	DocLink(HelloWorldWithChildren),
 ).Title("docgo Documentation").
-	URI("/").
+	Slug("/").
 	AbstractText(`Write documentation with go code in a declarative way to create beautiful documentation`).
 	Tables(
-		ContentTable(
+		ChildrenTable(
 			ContentGroup(
-				article1,
-				article2,
+				UseWithHtmlGo,
+				MarkdownDifference,
+			).Title("Essentials"),
+
+			ContentGroup(
+				HelloWorld,
+				HelloWorldWithChildren,
 			).Title("Samples"),
 
 			ContentGroup().Title("Structure and Formatting"),
 		).Title("Topics"),
 
-		ContentTable(
-			ContentGroup(
-				article3,
-			).Title("Basics"),
-		).Title("See Also"),
+		RelatedTable().Title("See Also"),
 	)
 
-var article1 = Doc().Tables(
-	ContentTable(
-		ContentGroup(
-			article11,
-		),
-	),
-).Title("Doc 1").
-	AbstractText("this is an sample abstract for doc 1")
+var related1 = []*DocBuilder{
+	MarkdownDifference,
+	UseWithHtmlGo,
+}
 
-var article2 = Doc().Title("Doc 2").
-	AbstractText("this is an sample abstract for doc 2").
-	Tables(
-		ContentTable(
-			ContentGroup(
-				HelloWorld,
-			),
-		),
-	)
-
-var article3 = Doc().Title("Doc 3").AbstractText("this is an sample abstract for doc 3")
-var article11 = Doc().Title("Doc 1.1").AbstractText("this is an sample abstract for doc 1.1")
-
-// @snippet_begin(HelloWorldSample)
-var HelloWorld = Doc(
-	Markdown(`
-## Overview
-
-Write some beautiful docs
-`),
-	Tip("This is quite important to learn"),
-).
-	Title("Hello World").
-	AbstractText(
-		"Hello world doc to describe how easy it is to create a doc",
-	)
-
-	// @snippet_end
+func relatedDocsWithout(current *DocBuilder, group []*DocBuilder) (r []*DocBuilder) {
+	for _, d := range group {
+		if d == current {
+			continue
+		}
+		r = append(r, d)
+	}
+	return
+}

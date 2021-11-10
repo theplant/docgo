@@ -11,7 +11,7 @@
     }
 
     h2 {
-        @apply text-xl sm:text-2xl lg:text-3xl font-medium;
+        @apply text-xl sm:text-2xl lg:text-3xl font-medium mt-8;
     }
 
     h3 {
@@ -68,6 +68,10 @@
 
     pre code.hljs {
         @apply bg-transparent text-base font-light block p-4;
+    }
+
+    p code {
+        @apply text-red-700 font-semibold italic;
     }
 
 }
