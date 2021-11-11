@@ -28,9 +28,9 @@ func (n *DocNode) AddChild(child *DocNode) {
 
 func (n *DocNode) GetPageURL() (r string) {
 	if n.URL == "/" {
-		return "/index.html"
+		return "index.html"
 	}
-	return fmt.Sprintf("%s.html", n.URL)
+	return strings.TrimLeft(fmt.Sprintf("%s.html", n.URL), "/")
 }
 
 type DocBuilder struct {

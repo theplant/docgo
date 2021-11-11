@@ -4,8 +4,14 @@ import (
 	"context"
 	"embed"
 	"fmt"
+	"io"
+	"io/fs"
 	"net/http"
+	"net/http/httptest"
+	"os"
+	"path/filepath"
 	"sort"
+	"strings"
 	"time"
 
 	"github.com/goplaid/web"
@@ -23,6 +29,7 @@ type Builder struct {
 	builder      *web.Builder
 	assets       embed.FS
 	assetsPrefix string
+	sitePrefix   string
 }
 
 func New() (r *Builder) {
@@ -40,6 +47,11 @@ func (b *Builder) Home(v *DocBuilder) (r *Builder) {
 func (b *Builder) Assets(prefix string, v embed.FS) (r *Builder) {
 	b.assets = v
 	b.assetsPrefix = prefix
+	return b
+}
+
+func (b *Builder) SitePrefix(v string) (r *Builder) {
+	b.sitePrefix = v
 	return b
 }
 
@@ -77,14 +89,72 @@ func (b *Builder) Build() (r *Builder) {
 	return b
 }
 
+func (b *Builder) BuildStaticSite(dir string) {
+	dir = strings.NewReplacer(" ", "_").Replace(dir)
+	if len(dir) == 0 || dir == "/" {
+		dir = "dist"
+	}
+
+	handler := b.Build()
+	err1 := os.RemoveAll(dir)
+	if err1 != nil {
+		fmt.Println("removing ", dir, err1)
+	}
+
+	var paths = []string{
+		"/index.css",
+		"/index.js",
+	}
+
+	for _, m := range b.mounts {
+		paths = append(paths, m.path)
+	}
+
+	fs.WalkDir(b.assets, ".", func(path string, d fs.DirEntry, err error) error {
+		if d.IsDir() {
+			return nil
+		}
+		paths = append(paths, filepath.Join("/", path))
+		return nil
+	})
+
+	for _, p := range paths {
+		r := httptest.NewRequest("GET", p, nil)
+		w := httptest.NewRecorder()
+		handler.ServeHTTP(w, r)
+		func() {
+			path := filepath.Join(dir, p)
+			fmt.Println("Generating ", path)
+			err := os.MkdirAll(filepath.Dir(path), 0755)
+			if err != nil {
+				panic(err)
+			}
+			var f *os.File
+			f, err = os.OpenFile(path, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0644)
+			if err != nil {
+				panic(err)
+			}
+			defer f.Close()
+
+			_, err = io.Copy(f, w.Body)
+			if err != nil {
+				panic(err)
+			}
+		}()
+
+	}
+
+}
+
 func (b *Builder) layout(body *DocBuilder) (r HTMLComponent) {
 	return HTML(
 		Head(
 			Title(body.GetPageTitle()),
 			Meta().Name("description").Content(body.abstractText),
 			RawHTML(`<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">`),
-			Link("/index.css").Rel("stylesheet").Type("text/css"),
-			Script("").Attr("defer", true).Src("/index.js"),
+			Base().Href(b.sitePrefix),
+			Link("index.css").Rel("stylesheet").Type("text/css"),
+			Script("").Attr("defer", true).Src("index.js"),
 		),
 		Body(
 			Div(
@@ -113,7 +183,7 @@ func (b *Builder) navigation(doc *DocBuilder) (r HTMLComponent) {
 						arrowIcon,
 					).Class("w-3 m-2 flex fill-current text-gray-500"),
 				),
-				A().Href(items[i].URL).Text(items[i].Title).
+				A().Href(items[i].GetPageURL()).Text(items[i].Title).
 					Class("text-gray-50"),
 			).Class("inline-flex"),
 		)
@@ -161,7 +231,7 @@ func (s uriSorter) Less(i, j int) bool {
 func (b *Builder) addToMounts(node *DocNode) {
 	// println(node.URL)
 	b.mounts = append(b.mounts,
-		&mount{node.GetPageURL(), func(w http.ResponseWriter, r *http.Request) {
+		&mount{filepath.Join("/", node.GetPageURL()), func(w http.ResponseWriter, r *http.Request) {
 			err := Fprint(w, b.layout(node.Doc), context.TODO())
 			if err != nil {
 				panic(err)

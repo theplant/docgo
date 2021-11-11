@@ -1,13 +1,16 @@
 DIR=$(PWD)
 snippetgo -pkg=docs > ./docs/examples-generated.go
 
+cd $(PWD)/docs
+go run ./build/main.go
+
 function docsRestart() {
   echo "=================>"
   killall docgodocs
 #  export DEV_CORE_JS=1
 #  export DEV_VUETIFY_JS=1
 #  export DEV_PRESETS=1
-  go build -o /tmp/docgodocs docs/docsmain/main.go && /tmp/docgodocs
+  go build -o /tmp/docgodocs ./docsmain/main.go && /tmp/docgodocs
 }
 
 export -f docsRestart
