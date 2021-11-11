@@ -6,7 +6,7 @@ import (
 	"os"
 
 	"github.com/theplant/docgo"
-	"github.com/theplant/docgo/docs"
+	"github.com/theplant/docgo/docsrc"
 )
 
 // @snippet_begin(BootUpDevSample)
@@ -17,8 +17,8 @@ func main() {
 	}
 	fmt.Println("Starting docs at :" + port)
 	http.Handle("/", docgo.New().
-		Assets("/assets/", docs.Assets).
-		Home(docs.Home).
+		Assets("/assets/", docsrc.Assets).
+		Home(docsrc.Home).
 		Build(),
 	)
 	err := http.ListenAndServe(":"+port, nil)

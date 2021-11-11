@@ -1,5 +1,5 @@
 // @snippet_begin(HelloWorldSample)
-package docs
+package docsrc
 
 import (
 	. "github.com/theplant/docgo"

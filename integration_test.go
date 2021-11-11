@@ -6,14 +6,14 @@ import (
 	"testing"
 
 	. "github.com/theplant/docgo"
-	"github.com/theplant/docgo/docs"
+	"github.com/theplant/docgo/docsrc"
 	h "github.com/theplant/htmlgo"
 	"github.com/theplant/testingutils"
 )
 
 func TestAll(t *testing.T) {
 	var s = New().
-		Home(docs.Home).
+		Home(docsrc.Home).
 		Header(h.Div()).
 		Footer(h.Div()).
 		Build()

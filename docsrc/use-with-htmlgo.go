@@ -1,4 +1,4 @@
-package docs
+package docsrc
 
 import (
 	. "github.com/theplant/docgo"

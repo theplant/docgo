@@ -1,7 +1,7 @@
 DIR=$(PWD)
-snippetgo -pkg=docs > ./docs/examples-generated.go
+snippetgo -pkg=docsrc > ./docsrc/examples-generated.go
 
-cd $(PWD)/docs
+cd $(PWD)/docsrc
 go run ./build/main.go
 
 function docsRestart() {

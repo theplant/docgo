@@ -49,7 +49,7 @@
 </p>
 
 <bran-code language='go'>
-<template slot='sourcecode'>package docs
+<template slot='sourcecode'>package docsrc
 
 import (
 	. &#34;github.com/theplant/docgo&#34;
@@ -86,8 +86,8 @@ Write some beautiful docs
 	}
 	fmt.Println(&#34;Starting docs at :&#34; + port)
 	http.Handle(&#34;/&#34;, docgo.New().
-		Assets(&#34;/assets/&#34;, docs.Assets).
-		Home(docs.Home).
+		Assets(&#34;/assets/&#34;, docsrc.Assets).
+		Home(docsrc.Home).
 		Build(),
 	)
 	err := http.ListenAndServe(&#34;:&#34;+port, nil)
