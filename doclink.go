@@ -22,6 +22,6 @@ func (b *DocLinkBuilder) MarshalHTML(ctx context.Context) (r []byte, err error) 
 	if b.doc == nil || b.doc.node == nil {
 		return
 	}
-	b.tag.Text(b.doc.node.Title).Href(b.doc.node.AbsoluteURI)
+	b.tag.Text(b.doc.node.Title).Href(b.doc.node.GetPageURL())
 	return b.tag.MarshalHTML(ctx)
 }

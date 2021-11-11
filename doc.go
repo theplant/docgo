@@ -2,6 +2,7 @@ package docgo
 
 import (
 	"context"
+	"fmt"
 	"path/filepath"
 	"strings"
 
@@ -10,19 +11,26 @@ import (
 )
 
 type DocNode struct {
-	Title       string
-	Abstract    string
-	URI         string
-	AbsoluteURI string
-	Doc         *DocBuilder `json:"-"`
-	ParentNode  *DocNode    `json:"-"`
-	ChildNodes  []*DocNode
+	Title      string
+	Abstract   string
+	Slug       string
+	URL        string
+	Doc        *DocBuilder `json:"-"`
+	ParentNode *DocNode    `json:"-"`
+	ChildNodes []*DocNode
 }
 
 func (n *DocNode) AddChild(child *DocNode) {
 	n.ChildNodes = append(n.ChildNodes, child)
 	child.ParentNode = n
-	child.AbsoluteURI = filepath.Join(n.AbsoluteURI, child.URI)
+	child.URL = filepath.Join(n.URL, child.Slug)
+}
+
+func (n *DocNode) GetPageURL() (r string) {
+	if n.URL == "/" {
+		return "/index.html"
+	}
+	return fmt.Sprintf("%s.html", n.URL)
 }
 
 type DocBuilder struct {
@@ -82,7 +90,7 @@ func (b *DocBuilder) ContentGroupItem(ctx context.Context) (r HTMLComponent) {
 				docIcon,
 			).Class("w-4 flex mr-4 text-gray-500 fill-current"),
 			Span(b.title),
-		).Class("inline-flex").Href(b.node.AbsoluteURI),
+		).Class("inline-flex").Href(b.node.GetPageURL()),
 		Div(
 			Div().Text(b.abstractText),
 		).Class("ml-8"),
@@ -103,11 +111,11 @@ func (b *DocBuilder) buildArticleNode() (r *DocNode) {
 		b.slug = strcase.ToKebab(b.title)
 	}
 	b.node = &DocNode{
-		Title:       b.title,
-		URI:         b.slug,
-		AbsoluteURI: filepath.Join("/", b.slug),
-		Abstract:    b.abstractText,
-		Doc:         b,
+		Title:    b.title,
+		Slug:     b.slug,
+		URL:      filepath.Join("/", b.slug),
+		Abstract: b.abstractText,
+		Doc:      b,
 	}
 	return b.node
 }

@@ -1,6 +1,8 @@
 package docs
 
 import (
+	"embed"
+
 	. "github.com/theplant/docgo"
 	ch "github.com/theplant/docgo/codehighlight"
 	. "github.com/theplant/htmlgo"
@@ -73,3 +75,6 @@ func relatedDocsWithout(current *DocBuilder, group []*DocBuilder) (r []*DocBuild
 	}
 	return
 }
+
+//go:embed assets/**.*
+var Assets embed.FS

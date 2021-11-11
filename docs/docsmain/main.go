@@ -17,6 +17,7 @@ func main() {
 	}
 	fmt.Println("Starting docs at :" + port)
 	http.Handle("/", docgo.New().
+		Assets("/assets/", docs.Assets).
 		Home(docs.Home).
 		Build(),
 	)

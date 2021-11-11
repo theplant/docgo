@@ -21,32 +21,32 @@ func TestAll(t *testing.T) {
 	var tree = s.ArticleTree()
 
 	expected := &DocNode{
-		Title:       "docgo Documentation",
-		URI:         "/",
-		AbsoluteURI: "/",
-		Abstract:    "Use go code in declarative way to create beautiful documentation",
+		Title:    "docgo Documentation",
+		Slug:     "/",
+		URL:      "/",
+		Abstract: "Use go code in declarative way to create beautiful documentation",
 		ChildNodes: []*DocNode{
 			{
-				Title:       "Doc 1",
-				URI:         "doc-1",
-				AbsoluteURI: "/doc-1",
+				Title: "Doc 1",
+				Slug:  "doc-1",
+				URL:   "/doc-1",
 				ChildNodes: []*DocNode{
 					{
-						Title:       "Doc 1.1",
-						URI:         "doc-1-1",
-						AbsoluteURI: "/doc-1/doc-1-1",
+						Title: "Doc 1.1",
+						Slug:  "doc-1-1",
+						URL:   "/doc-1/doc-1-1",
 					},
 				},
 			},
 			{
-				Title:       "Doc 2",
-				URI:         "doc-2",
-				AbsoluteURI: "/doc-2",
+				Title: "Doc 2",
+				Slug:  "doc-2",
+				URL:   "/doc-2",
 			},
 			{
-				Title:       "Doc 3",
-				URI:         "doc-3",
-				AbsoluteURI: "/doc-3",
+				Title: "Doc 3",
+				Slug:  "doc-3",
+				URL:   "/doc-3",
 			},
 		},
 	}

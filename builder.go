@@ -2,6 +2,7 @@ package docgo
 
 import (
 	"context"
+	"embed"
 	"fmt"
 	"net/http"
 	"sort"
@@ -13,13 +14,15 @@ import (
 )
 
 type Builder struct {
-	home        *DocBuilder
-	header      HTMLComponent
-	footer      HTMLComponent
-	articleTree *DocNode
-	mux         *http.ServeMux
-	mounts      []*mount
-	builder     *web.Builder
+	home         *DocBuilder
+	header       HTMLComponent
+	footer       HTMLComponent
+	articleTree  *DocNode
+	mux          *http.ServeMux
+	mounts       []*mount
+	builder      *web.Builder
+	assets       embed.FS
+	assetsPrefix string
 }
 
 func New() (r *Builder) {
@@ -31,6 +34,12 @@ func New() (r *Builder) {
 
 func (b *Builder) Home(v *DocBuilder) (r *Builder) {
 	b.home = v
+	return b
+}
+
+func (b *Builder) Assets(prefix string, v embed.FS) (r *Builder) {
+	b.assets = v
+	b.assetsPrefix = prefix
 	return b
 }
 
@@ -62,6 +71,9 @@ func (b *Builder) Build() (r *Builder) {
 		fmt.Println("Mounting", m.path)
 		b.mux.HandleFunc(m.path, m.f)
 	}
+
+	assetsFs := http.FileServer(http.FS(b.assets))
+	b.mux.Handle(b.assetsPrefix, assetsFs)
 	return b
 }
 
@@ -101,7 +113,7 @@ func (b *Builder) navigation(doc *DocBuilder) (r HTMLComponent) {
 						arrowIcon,
 					).Class("w-3 m-2 flex fill-current text-gray-500"),
 				),
-				A().Href(items[i].AbsoluteURI).Text(items[i].Title).
+				A().Href(items[i].URL).Text(items[i].Title).
 					Class("text-gray-50"),
 			).Class("inline-flex"),
 		)
@@ -147,9 +159,9 @@ func (s uriSorter) Less(i, j int) bool {
 }
 
 func (b *Builder) addToMounts(node *DocNode) {
-	// println(node.AbsoluteURI)
+	// println(node.URL)
 	b.mounts = append(b.mounts,
-		&mount{node.AbsoluteURI, func(w http.ResponseWriter, r *http.Request) {
+		&mount{node.GetPageURL(), func(w http.ResponseWriter, r *http.Request) {
 			err := Fprint(w, b.layout(node.Doc), context.TODO())
 			if err != nil {
 				panic(err)
@@ -183,6 +195,11 @@ func (b *Builder) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if b.mux == nil {
 		b.Build()
 	}
+
+	if r.URL.String() == "/" {
+		http.Redirect(w, r, "/index.html", http.StatusPermanentRedirect)
+	}
+
 	b.mux.ServeHTTP(w, r)
 	return
 }
