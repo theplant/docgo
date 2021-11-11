@@ -148,8 +148,10 @@ func (b *DocBuilder) MarshalHTML(ctx context.Context) ([]byte, error) {
 					).Class("border-t"),
 				).Class("sm:w-9/12"),
 				Div(
-					Text("On This Page"),
-					RawHTML("<toc></toc>"),
+					Div(
+						Text("On This Page"),
+						RawHTML("<toc></toc>"),
+					).Class("sticky top-4"),
 				).Class("ml-4 sm:w-3/12 font-medium text-base hidden sm:block text-gray-600"),
 			).Class("sm:flex mt-8 mb-16"),
 		).Class("lg:max-w-5xl mx-auto px-10"),
