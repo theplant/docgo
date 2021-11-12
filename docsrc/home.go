@@ -22,13 +22,51 @@ The developer community often use markdown or in Python world use [Sphinx](https
 
 `),
 	H2("Getting Started"),
+	Markdown(`
+Run this script to install ~docgo~ binary
+
+~~~
+$ go install github.com/theplant/docgo/x/docgo@main 
+~~~
+
+Go to a go package that use go modules with ~go.mod~ in the directory. and run:
+
+~~~
+$ docgo
+~~~
+
+It will output something like this:
+
+~~~
+docsrc/assets/logo.png generated
+docsrc/build/main.go generated
+docsrc/dev/main.go generated
+docsrc/dev.sh generated
+docsrc/examples-generated.go generated
+docsrc/home.go generated
+Done
+
+cd docsrc && ./dev.sh to start your doc
+~~~
+
+Run ~cd docsrc && ./dev.sh~ and access http://localhost:8800 to see generated first doc.
+
+The ~./dev.sh~ script is using [entr](https://eradman.com/entrproject/) to do auto restart server after you edit any go file. So make sure to have that installed if you haven't
+
+~~~
+$ brew install entr
+~~~
+
+Then you can go back to the ~docsrc~ directory to edit and create go files to update docs.
+
+`),
 	P(
 		Text("The following code is used to build this doc"),
 		DocLink(HelloWorld),
 	),
 	ch.Code(HelloWorldSample).Language("go"),
 	P(
-		Markdown("Use the following code to boot up your doc app, Suppose you have already created a `Home` Doc in docs package."),
+		Markdown("Use the following code to boot up your doc app, Suppose you have already created a `Home` Doc in docsrc package."),
 		ch.Code(BootUpDevSample).Language("go"),
 	),
 
@@ -46,6 +84,7 @@ Use ~ChildrenTable(...)~ to put other docs into current doc page children, The d
 	Tables(
 		ChildrenTable(
 			ContentGroup(
+				GithubPagesIntegration,
 				UseWithHtmlGo,
 				MarkdownDifference,
 			).Title("Essentials"),

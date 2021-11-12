@@ -98,7 +98,6 @@ func copyAndReplaceFiles(box embed.FS, dir string, template string, pkg string) 
 		}
 
 		var fmod fs.FileMode = 0644
-		fmt.Println(fmod)
 		err = ioutil.WriteFile(fp, content, fmod)
 		if err != nil {
 			panic(err)
