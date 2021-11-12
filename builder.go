@@ -15,7 +15,7 @@ import (
 	"time"
 
 	"github.com/goplaid/web"
-	"github.com/theplant/docgo/codehighlight"
+	"github.com/theplant/docgo/ch"
 	. "github.com/theplant/htmlgo"
 )
 
@@ -250,12 +250,12 @@ func (b *Builder) initMuxWithStatic() {
 		b.mux.Handle("/index.js",
 			b.builder.PacksHandler("text/javascript",
 				web.JSVueComponentsPack(),
-				codehighlight.JSComponentsPack(),
+				ch.JSComponentsPack(),
 				JSComponentsPack(),
 				web.JSComponentsPack()))
 
 		b.mux.Handle("/index.css", b.builder.PacksHandler("text/css",
-			codehighlight.CSSComponentsPack(),
+			ch.CSSComponentsPack(),
 			CSSComponentsPack(),
 		))
 	}

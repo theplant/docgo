@@ -1,4 +1,4 @@
-package codehighlight
+package ch
 
 import (
 	"embed"

@@ -3,7 +3,7 @@ package docsrc
 
 import (
 	. "github.com/theplant/docgo"
-	ch "github.com/theplant/docgo/codehighlight"
+	"github.com/theplant/docgo/ch"
 	. "github.com/theplant/htmlgo"
 )
 
