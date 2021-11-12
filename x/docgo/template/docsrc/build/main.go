@@ -9,6 +9,6 @@ func main() {
 	docgo.New().
 		Assets("/assets/", docsrc.Assets).
 		Home(docsrc.Home).
-		SitePrefix("/docgo/").
+		SitePrefix("/docgoPackageName/").
 		BuildStaticSite("../docs")
 }
