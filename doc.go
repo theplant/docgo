@@ -88,9 +88,9 @@ func (b *DocBuilder) ContentGroupItem(ctx context.Context) (r HTMLComponent) {
 		A(
 			Div(
 				docIcon,
-			).Class("w-4 flex mr-4 text-gray-500 fill-current"),
+			).Class("w-4 h-4 mt-2 mr-4 text-gray-500 fill-current"),
 			Span(b.title),
-		).Class("inline-flex").Href(b.node.GetPageURL()),
+		).Class("flex").Href(b.node.GetPageURL()),
 		If(len(b.abstractText) > 0, Div(
 			Div().Text(b.abstractText),
 		).Class("ml-8")),

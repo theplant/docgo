@@ -34,7 +34,8 @@ type Builder struct {
 
 func New() (r *Builder) {
 	r = &Builder{
-		builder: web.New(),
+		builder:    web.New(),
+		sitePrefix: "/",
 	}
 	return
 }
@@ -181,11 +182,11 @@ func (b *Builder) navigation(doc *DocBuilder) (r HTMLComponent) {
 				If(i < (len(items)-1),
 					Div(
 						arrowIcon,
-					).Class("w-3 m-2 flex fill-current text-gray-500"),
+					).Class("w-3 m-2 fill-current text-gray-500"),
 				),
 				A().Href(items[i].GetPageURL()).Text(items[i].Title).
 					Class("text-gray-50"),
-			).Class("inline-flex"),
+			).Class("flex"),
 		)
 	}
 
