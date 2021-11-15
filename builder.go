@@ -34,8 +34,9 @@ type Builder struct {
 
 func New() (r *Builder) {
 	r = &Builder{
-		builder:    web.New(),
-		sitePrefix: "/",
+		builder:      web.New(),
+		sitePrefix:   "/",
+		assetsPrefix: "/assets/",
 	}
 	return
 }
@@ -153,7 +154,7 @@ func (b *Builder) layout(body *DocBuilder) (r HTMLComponent) {
 			Title(body.GetPageTitle()),
 			Meta().Name("description").Content(body.abstractText),
 			RawHTML(`<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">`),
-			Base().Href(b.sitePrefix),
+			If(len(b.sitePrefix) > 0, Base().Href(b.sitePrefix)),
 			Link("index.css").Rel("stylesheet").Type("text/css"),
 			Script("").Attr("defer", true).Src("index.js"),
 		),

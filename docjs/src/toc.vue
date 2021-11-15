@@ -16,7 +16,7 @@ export default {
         const a = document.createElement('a');
         value.id = encodeURIComponent(value.textContent)
         a.innerHTML = value.textContent;
-        a.href = `#${value.id}`;
+        a.href = `${location.pathname}#${value.id}`;
         li.appendChild(a);
         ul.appendChild(li);
       });

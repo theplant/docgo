@@ -35,7 +35,7 @@ func (b *ContentGroupBuilder) MarshalHTML(ctx context.Context) (r []byte, err er
 	return Div(
 		Div(
 			H3(b.title),
-		).Class("sm:w-1/4 pb-4 border-b sm:border-none"),
+		).Class("sm:w-1/4 pb-4 px-2 border-b sm:border-none"),
 		Div(
 			vs...,
 		).Class("sm:w-3/4"),
