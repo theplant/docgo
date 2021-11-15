@@ -173,7 +173,7 @@ func (b *Builder) navigation(doc *DocBuilder) (r HTMLComponent) {
 	items := parentDocNodes(doc)
 
 	content := Div().Attr("aria-label", "Breadcrumbs").
-		Class("flex list-none lg:max-w-5xl mx-auto px-10")
+		Class("flex list-none lg:max-w-5xl mx-auto px-6 sm:px-10")
 
 	for i := len(items) - 1; i >= 0; i-- {
 		content.AppendChildren(

@@ -6,7 +6,6 @@
 export default {
   name: 'toc',
   mounted() {
-    console.log("123")
     this.$nextTick(() => {
       const toc = this.$refs.toc;
       const matches = document.querySelectorAll(`body h2`);

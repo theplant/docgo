@@ -43,6 +43,6 @@ func (b *ContentTableBuilder) MarshalHTML(ctx context.Context) (r []byte, err er
 		Div(
 			H2(b.title),
 			Components(b.children...),
-		).Class("lg:max-w-5xl mx-auto px-10 mt-5"),
+		).Class("lg:max-w-5xl mx-auto px-6 sm:px-10 mt-5"),
 	).Class("py-4").MarshalHTML(ctx)
 }

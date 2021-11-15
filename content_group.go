@@ -39,5 +39,5 @@ func (b *ContentGroupBuilder) MarshalHTML(ctx context.Context) (r []byte, err er
 		Div(
 			vs...,
 		).Class("sm:w-3/4"),
-	).Class("sm:flex sm:border-t mt-8").MarshalHTML(ctx)
+	).Class("sm:flex sm:border-t mt-4 sm:mt-8").MarshalHTML(ctx)
 }

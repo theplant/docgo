@@ -91,10 +91,10 @@ func (b *DocBuilder) ContentGroupItem(ctx context.Context) (r HTMLComponent) {
 			).Class("w-4 flex mr-4 text-gray-500 fill-current"),
 			Span(b.title),
 		).Class("inline-flex").Href(b.node.GetPageURL()),
-		Div(
+		If(len(b.abstractText) > 0, Div(
 			Div().Text(b.abstractText),
-		).Class("ml-8"),
-	).Class("mt-8")
+		).Class("ml-8")),
+	).Class("mt-4 sm:mt-8")
 	return
 }
 
@@ -162,10 +162,10 @@ func (b *DocBuilder) MarshalHTML(ctx context.Context) ([]byte, error) {
 					).Class("sticky top-4"),
 				).Class("ml-4 sm:w-3/12 font-medium text-base hidden sm:block text-gray-600"),
 			).Class("sm:flex mt-8 mb-16"),
-		).Class("lg:max-w-5xl mx-auto px-10"),
+		).Class("lg:max-w-5xl mx-auto px-6 sm:px-8"),
 
 		If(len(b.tables) > 0,
-			Div(b.tables...).Class("pt-4 pb-16 bg-gray-50"),
+			Div(b.tables...).Class("pb-16 bg-gray-50"),
 		),
 	).MarshalHTML(ctx)
 }
