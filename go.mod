@@ -3,7 +3,7 @@ module github.com/theplant/docgo
 go 1.17
 
 require (
-	github.com/goplaid/web v1.1.18
+	github.com/goplaid/web v1.1.19
 	github.com/iancoleman/strcase v0.2.0
 	github.com/manifoldco/promptui v0.9.0
 	github.com/shurcooL/github_flavored_markdown v0.0.0-20210228213109-c3a9aa474629
