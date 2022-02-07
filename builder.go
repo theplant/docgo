@@ -174,20 +174,33 @@ func (b *Builder) navigation(doc *DocBuilder) (r HTMLComponent) {
 
 	items := parentDocNodes(doc)
 
-	content := Div().Attr("aria-label", "Breadcrumbs").
-		Class("flex list-none lg:max-w-5xl mx-auto px-6 sm:px-10")
+	content := Ul().Attr("aria-label", "Breadcrumbs").
+		Class("md:flex list-none lg:max-w-5xl mx-auto px-6 sm:px-10")
 
 	for i := len(items) - 1; i >= 0; i-- {
+		subItems := items[i].ChildNodes
+		subContent := Ul().Class("text-white absolute left-0 top-6 z-10 bg-gray-700 pl-8 pr-6 py-4 m-0 pb-0 nav-subitem hidden w-max")
+		for subi := len(subItems) - 1; subi >= 0; subi-- {
+			subContent.AppendChildren(
+				Li(
+					A().Href(subItems[subi].GetPageURL()).Text(subItems[subi].Title).
+						Class("text-gray-50"),
+				).Class("my-4"),
+			)
+		}
 		content.AppendChildren(
-			Div(
-				If(i < (len(items)-1),
-					Div(
-						arrowIcon,
-					).Class("w-3 m-2 fill-current text-gray-500"),
-				),
-				A().Href(items[i].GetPageURL()).Text(items[i].Title).
-					Class("text-gray-50"),
-			).Class("flex"),
+			Li(
+				Div(
+					If(i < (len(items)-1),
+						Div(
+							arrowIcon,
+						).Class("w-3 m-2 fill-current text-gray-500"),
+					),
+					A().Href(items[i].GetPageURL()).Text(items[i].Title).
+						Class("text-gray-50"),
+				).Class("flex"),
+				If(len(subItems) > 0, subContent),
+			).Class("md:float-left relative nav-item mt-0"),
 		)
 	}
 
