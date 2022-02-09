@@ -103,97 +103,17 @@ cd docsrc &amp;&amp; ./dev.sh to start your doc
 <a href='hello-world.html'>Hello World</a>
 </p>
 
-<bran-code language='go'>
-<template slot='sourcecode'>package docsrc
-
-import (
-	. &#34;github.com/theplant/docgo&#34;
-	&#34;github.com/theplant/docgo/ch&#34;
-	. &#34;github.com/theplant/htmlgo&#34;
-)
-
-var HelloWorld = Doc(
-	Markdown(`
-## Overview
-
-Write some beautiful docs
-`),
-	Tip(&#34;This is quite important to learn&#34;),
-
-	H2(&#34;A new section&#34;),
-	P(Text(&#34;Doc of that section&#34;)),
-	ch.Code(&#34;var Hello = 123&#34;).Language(&#34;go&#34;),
-).
-	Title(&#34;Hello World&#34;).
-	AbstractText(
-		&#34;Hello world doc to describe how easy it is to create a doc&#34;,
-	)
-</template>
-</bran-code>
+<highlightjs :language='"go"' :code='"package docsrc\n\nimport (\n\t. \"github.com/theplant/docgo\"\n\t\"github.com/theplant/docgo/ch\"\n\t. \"github.com/theplant/htmlgo\"\n)\n\nvar HelloWorld = Doc(\n\tMarkdown(`\n## Overview\n\nWrite some beautiful docs\n`),\n\tTip(\"This is quite important to learn\"),\n\n\tH2(\"A new section\"),\n\tP(Text(\"Doc of that section\")),\n\tch.Code(\"var Hello = 123\").Language(\"go\"),\n).\n\tTitle(\"Hello World\").\n\tAbstractText(\n\t\t\"Hello world doc to describe how easy it is to create a doc\",\n\t)\n"'></highlightjs>
 
 <p><p>Use the following code to boot up your doc app, Suppose you have already created a <code>Home</code> Doc in docsrc package.</p>
 
-<bran-code language='go'>
-<template slot='sourcecode'>func main() {
-	port := os.Getenv(&#34;PORT&#34;)
-	if len(port) == 0 {
-		port = &#34;8800&#34;
-	}
-	fmt.Println(&#34;Starting docs at :&#34; + port)
-	http.Handle(&#34;/&#34;, docgo.New().
-		Assets(&#34;/assets/&#34;, docsrc.Assets).
-		Home(docsrc.Home).
-		Build(),
-	)
-	err := http.ListenAndServe(&#34;:&#34;+port, nil)
-	if err != nil {
-		panic(err)
-	}
-}
-</template>
-</bran-code>
+<highlightjs :language='"go"' :code='"func main() {\n\tport := os.Getenv(\"PORT\")\n\tif len(port) == 0 {\n\t\tport = \"8800\"\n\t}\n\tfmt.Println(\"Starting docs at :\" + port)\n\thttp.Handle(\"/\", docgo.New().\n\t\tAssets(\"/assets/\", docsrc.Assets).\n\t\tHome(docsrc.Home).\n\t\tBuild(),\n\t)\n\terr := http.ListenAndServe(\":\"+port, nil)\n\tif err != nil {\n\t\tpanic(err)\n\t}\n}\n"'></highlightjs>
 </p>
 <h2><a name="children-docs" class="anchor" href="#children-docs" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>Children Docs</h2>
 
 <p>Use <code>ChildrenTable(...)</code> to put other docs into current doc page children, The doc url will reflect the hierarchy, children docs url will contain parent doc slug</p>
 
-<bran-code language='go'>
-<template slot='sourcecode'>var HelloWorldWithChildren = Doc(
-	Markdown(`
-## Overview
-
-Write some beautiful docs
-`),
-).Title(&#34;Hello World with children&#34;).
-	AbstractText(&#34;Hello world with children is to describe how to add children docs&#34;).
-	Tables(
-		ChildrenTable(
-			ContentGroup(
-				HowToSayHello,
-				HowToGoodBye,
-			).Title(&#34;Essentials&#34;),
-		),
-	)
-
-var HowToSayHello = Doc(Markdown(`
-## Say Hello
-
-Hi, There
-
-~~~go
-var Hello = true
-~~~
-
-`)).Title(&#34;How to say hello&#34;)
-
-var HowToGoodBye = Doc(Markdown(`
-## Say Good Bye
-
-Bye, There
-
-`)).Title(&#34;How to say good bye&#34;)
-</template>
-</bran-code>
+<highlightjs :language='"go"' :code='"var HelloWorldWithChildren = Doc(\n\tMarkdown(`\n## Overview\n\nWrite some beautiful docs\n`),\n).Title(\"Hello World with children\").\n\tAbstractText(\"Hello world with children is to describe how to add children docs\").\n\tTables(\n\t\tChildrenTable(\n\t\t\tContentGroup(\n\t\t\t\tHowToSayHello,\n\t\t\t\tHowToGoodBye,\n\t\t\t).Title(\"Essentials\"),\n\t\t),\n\t)\n\nvar HowToSayHello = Doc(Markdown(`\n## Say Hello\n\nHi, There\n\n~~~go\nvar Hello = true\n~~~\n\n`)).Title(\"How to say hello\")\n\nvar HowToGoodBye = Doc(Markdown(`\n## Say Good Bye\n\nBye, There\n\n`)).Title(\"How to say good bye\")\n"'></highlightjs>
 Check out this link to see how it works
 <a href='hello-world-with-children.html'>Hello World with children</a>
 </div>

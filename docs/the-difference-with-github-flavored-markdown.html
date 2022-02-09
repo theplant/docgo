@@ -82,19 +82,7 @@ func, So we have to replace it with
 <code>~</code>
 </p>
 
-<bran-code language='go'>
-<template slot='sourcecode'>var HowToSayHelloWithCodeBlock = Doc(Markdown(`
-## Say Hello
-
-Hi, There
-
-~~~
-var Hello = true
-~~~
-
-`)).Title(&#34;How to say hello with code block&#34;)
-</template>
-</bran-code>
+<highlightjs :language='"go"' :code='"var HowToSayHelloWithCodeBlock = Doc(Markdown(`\n## Say Hello\n\nHi, There\n\n~~~\nvar Hello = true\n~~~\n\n`)).Title(\"How to say hello with code block\")\n"'></highlightjs>
 Which render a page like this
 <a href='the-difference-with-github-flavored-markdown/how-to-say-hello-with-code-block.html'>How to say hello with code block</a>
 </div>

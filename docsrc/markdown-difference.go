@@ -7,6 +7,10 @@ import (
 )
 
 // @snippet_begin(MarkdownDifferenceSample)
+var s = []struct {
+	name string
+}{{name: "123"}}
+
 var MarkdownDifference = Doc(
 
 	H2("Be aware the Go source code limitations"),
