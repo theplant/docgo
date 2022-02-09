@@ -20,7 +20,12 @@ type DocNode struct {
 	ChildNodes []*DocNode
 }
 
-func (n *DocNode) AddChild(child *DocNode) {
+func (n *DocNode) PutChild(child *DocNode) {
+	for _, ch := range n.ChildNodes {
+		if ch == child {
+			return
+		}
+	}
 	n.ChildNodes = append(n.ChildNodes, child)
 	child.ParentNode = n
 	child.URL = filepath.Join(n.URL, child.Slug)
@@ -135,7 +140,7 @@ func (b *DocBuilder) MarshalHTML(ctx context.Context) ([]byte, error) {
 
 	if collectChildren {
 		if ok {
-			parent.AddChild(b.node)
+			parent.PutChild(b.node)
 		}
 	}
 	ctx = context.WithValue(ctx, articleNodeKey, b.node)
