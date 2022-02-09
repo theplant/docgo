@@ -180,10 +180,10 @@ func (b *Builder) navigation(doc *DocBuilder) (r HTMLComponent) {
 	for i := len(items) - 1; i >= 0; i-- {
 		subItems := items[i].ChildNodes
 		subContent := Ul().Class("text-white absolute left-0 top-6 z-10 bg-gray-700 pl-8 pr-6 py-4 m-0 pb-0 nav-subitem hidden w-max")
-		for subi := len(subItems) - 1; subi >= 0; subi-- {
+		for _, si := range subItems {
 			subContent.AppendChildren(
 				Li(
-					A().Href(subItems[subi].GetPageURL()).Text(subItems[subi].Title).
+					A().Href(si.GetPageURL()).Text(si.Title).
 						Class("text-gray-50"),
 				).Class("my-4"),
 			)
