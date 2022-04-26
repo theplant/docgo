@@ -16,8 +16,9 @@ func main() {
 	}
 	fmt.Println("Starting docs at :" + port)
 	http.Handle("/", docgo.New().
+		MainPageTitle("My Document").
 		Assets("/assets/", docsrc.Assets).
-		Home(docsrc.Home).
+		DocTree(docsrc.DocTree...).
 		Build(),
 	)
 	err := http.ListenAndServe(":"+port, nil)

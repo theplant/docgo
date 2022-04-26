@@ -47,7 +47,7 @@
   }
 
   .toc ul {
-    @apply list-none text-sm font-normal ml-4;
+    @apply list-none text-sm font-normal ml-2;
   }
 
   .toc li {

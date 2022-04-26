@@ -8,7 +8,8 @@ import (
 func main() {
 	docgo.New().
 		Assets("/assets/", docsrc.Assets).
-		Home(docsrc.Home).
+		MainPageTitle("docgo Document").
 		SitePrefix("/docgo/").
+		DocTree(docsrc.DocTree...).
 		BuildStaticSite("../docs")
 }

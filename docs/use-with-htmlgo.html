@@ -2,7 +2,7 @@
 
 <html>
 <head>
-<title>Use with htmlgo - docgo Documentation</title>
+<title>Essentials - Use with htmlgo - docgo Document</title>
 
 <meta name='description' content='The ability to use any html code inside your documentation is pretty good'>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -15,54 +15,44 @@
 
 <body>
 <div id='app' v-cloak>
-<nav class='bg-gray-700 py-3 text-base font-normal mb-8'>
-<ul aria-label='Breadcrumbs' class='md:flex list-none lg:max-w-5xl mx-auto px-6 sm:px-10'>
-<li class='md:float-left relative nav-item mt-0'>
-<div class='flex'>
-<a href='index.html' class='text-gray-50'>docgo Documentation</a>
-</div>
+<div class='flex h-screen'>
+<div class='flex-1 flex flex-col overflow-hidden'>
+<div class='flex h-full'>
+<aside class='flex flex-col w-80 h-full bg-gray-50 border-r border-gray-200'>
+<div class='h-12'><search></search></div>
 
-<ul class='text-white absolute left-0 top-6 z-10 bg-gray-700 pl-8 pr-6 py-4 m-0 pb-0 nav-subitem hidden w-max'>
-<li class='my-4'>
-<a href='github-pages-integration.html' class='text-gray-50'>Github Pages Integration</a>
+<ul class='px-0 mx-0 text-base font-normal list-none text-gray-700'>
+<li>
+<a href='index.html' class='inline-block px-4 truncate break-words w-64 text-gray-700'>Introduction</a>
 </li>
 
-<li class='my-4'>
-<a href='use-with-htmlgo.html' class='text-gray-50'>Use with htmlgo</a>
+<li class='cursor-default px-4 truncate break-words w-64'>Essentials</li>
+
+<li>
+<a href='github-pages-integration.html' class='inline-block pl-10 pr-4 truncate break-words w-64 text-gray-700'>Github Pages Integration</a>
 </li>
 
-<li class='my-4'>
-<a href='the-difference-with-github-flavored-markdown.html' class='text-gray-50'>The difference with Github Flavored Markdown</a>
+<li>
+<a href='use-with-htmlgo.html' class='inline-block pl-10 pr-4 truncate break-words w-64 text-blue-500'>Use with htmlgo</a>
 </li>
 
-<li class='my-4'>
-<a href='hello-world.html' class='text-gray-50'>Hello World</a>
+<li>
+<a href='the-difference-with-github-flavored-markdown.html' class='inline-block pl-10 pr-4 truncate break-words w-64 text-gray-700'>The difference with Github Flavored Markdown</a>
 </li>
 
-<li class='my-4'>
-<a href='hello-world-with-children.html' class='text-gray-50'>Hello World with children</a>
-</li>
-</ul>
-</li>
+<li class='cursor-default px-4 truncate break-words w-64'>Samples</li>
 
-<li class='md:float-left relative nav-item mt-0'>
-<div class='flex'>
-<div class='w-3 m-2 fill-current text-gray-500'>
-<svg aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 14 14" data-v-134594fd="" data-v-838665fe=""><path data-v-7abeccde="" d="m4.81347656 13.1269531c.22558594 0 .41015625-.0820312.56738282-.2324219l5.31835942-5.19531245c.1845703-.19140625.2802734-.38964844.2802734-.63574219 0-.23925781-.0888672-.45117187-.2802734-.62890625l-5.31835942-5.20214843c-.15722657-.15039063-.34179688-.23242188-.56738282-.23242188-.45800781 0-.81347656.35546875-.81347656.80664062 0 .21875.09570312.43066407.24609375.58789063l4.79199219 4.67578125-4.79199219 4.6621094c-.15722656.1640625-.24609375.3623047-.24609375.5878906 0 .4511719.35546875.8066406.81347656.8066406z"></path></svg>
-</div>
-
-<a href='use-with-htmlgo.html' class='text-gray-50'>Use with htmlgo</a>
-</div>
+<li>
+<a href='hello-world.html' class='inline-block pl-10 pr-4 truncate break-words w-64 text-gray-700'>Hello World</a>
 </li>
 </ul>
-</nav>
+</aside>
 
-<div>
-<main class='lg:max-w-5xl mx-auto px-6 sm:px-8'>
-<h1>Use with htmlgo</h1>
+<main class='flex flex-col w-full bg-white overflow-x-hidden overflow-y-auto'>
+<div id='docContentBox' class='flex flex-row w-full'>
+<div class='flex-grow px-10 py-8'>
+<h1 class='mb-8'>Use with htmlgo</h1>
 
-<div class='sm:flex mt-8 mb-16'>
-<div class='sm:w-9/12'>
 <div class='mb-8 text-xl font-normal'>The ability to use any html code inside your documentation is pretty good</div>
 
 <div class='border-t'><h2><a name="use-any-html" class="anchor" href="#use-any-html" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use any html</h2>
@@ -71,15 +61,17 @@
 
 <p>Take a look at this example:</p>
 
-<highlightjs :language='"go"' :code='"var s = []struct {\n\tname string\n}{{name: \"123\"}}\n\nvar MarkdownDifference = Doc(\n\n\tH2(\"Be aware the Go source code limitations\"),\n\n\tP(\n\t\tText(\"Since it&#39;s not possible to write\"),\n\t\tCode(\"`\"),\n\t\tText(\"if you are writing inside a\"),\n\t\tA().Text(\"go raw string literals\").Href(\"https://golang.org/ref/spec#String_literals\"),\n\t\tText(\"which normally used to pass in \"),\n\t\tCode(\"Markdown\"),\n\t\tText(\"func, So we have to replace it with\"),\n\t\tCode(\"~\"),\n\t),\n\tch.Code(HowToSayHelloWithCodeBlockSample).Language(\"go\"),\n\tText(\"Which render a page like this\"),\n\tDocLink(HowToSayHelloWithCodeBlock),\n).Title(\"The difference with Github Flavored Markdown\").\n\tTables(\n\t\tChildrenTable(\n\t\t\tContentGroup(\n\t\t\t\tHowToSayHelloWithCodeBlock,\n\t\t\t).Title(\"Samples\"),\n\t\t),\n\n\t\tRelatedTable(\n\t\t\tContentGroup(\n\t\t\t\tUseWithHtmlGo,\n\t\t\t),\n\t\t),\n\t)\n"'></highlightjs>
+<highlightjs :language='"go"' :code='"var s = []struct {\n\tname string\n}{{name: \"123\"}}\n\nvar MarkdownDifference = Doc(\n\n\tH2(\"Be aware the Go source code limitations\"),\n\n\tP(\n\t\tText(\"Since it&#39;s not possible to write\"),\n\t\tCode(\"`\"),\n\t\tText(\"if you are writing inside a\"),\n\t\tA().Text(\"go raw string literals\").Href(\"https://golang.org/ref/spec#String_literals\"),\n\t\tText(\"which normally used to pass in \"),\n\t\tCode(\"Markdown\"),\n\t\tText(\"func, So we have to replace it with\"),\n\t\tCode(\"~\"),\n\t),\n\tch.Code(HowToSayHelloWithCodeBlockSample).Language(\"go\"),\n).Title(\"The difference with Github Flavored Markdown\")\n"'></highlightjs>
 </div>
 </div>
 
-<div class='ml-4 sm:w-3/12 font-medium text-base hidden sm:block text-gray-600'>
-<div class='sticky top-4'>On This Page<toc></toc></div>
+<div class='font-medium text-base hidden sm:block text-gray-600'>
+<div class='sticky top-4 w-52'>On This Page<toc></toc></div>
 </div>
 </div>
-</main>
+<search-result></search-result></main>
+</div>
+</div>
 </div>
 </div>
 </body>
