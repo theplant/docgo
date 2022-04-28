@@ -11,7 +11,7 @@
                     v-for="item in result"
                     >
                     <h3><a 
-                            :href="'/' + item.URL + '?h=' + keyword" 
+                            :href="item.URL" 
                             class="text-xl text-blue-700"
                             >{{item.Title}}</a></h3>
                     <p class="text-base" v-html="item.Body"></p>
@@ -73,7 +73,7 @@ export default {
                     plainBody = this.escapeHTML(plainBody)
                     var colorBody = plainBody.replaceAll(rre, "<span class='bg-yellow-300'>$1</span>")
                     this.result.push({
-                        URL: index.URL,
+                        URL: window.getURLWithBaseURI(`/${index.URL}?h=${k}`),
                         Title: index.Title,
                         Body: colorBody,
                     })
@@ -82,7 +82,7 @@ export default {
         })
 
         this.$nextTick(() => {
-            fetch("/search_indexes.json").
+            fetch(window.getURLWithBaseURI("/search_indexes.json")).
                 then(r => r.json()).
                 then(r => this.indexes = r || [])
         })

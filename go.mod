@@ -8,7 +8,6 @@ require (
 	github.com/manifoldco/promptui v0.9.0
 	github.com/shurcooL/github_flavored_markdown v0.0.0-20210228213109-c3a9aa474629
 	github.com/theplant/htmlgo v1.0.3
-	github.com/theplant/testingutils v0.0.0-20190603093022-26d8b4d95c61
 	golang.org/x/net v0.0.0-20211105192438-b53810dc28af
 )
 
@@ -20,7 +19,6 @@ require (
 	github.com/gorilla/css v1.0.0 // indirect
 	github.com/kr/pretty v0.3.0 // indirect
 	github.com/microcosm-cc/bluemonday v1.0.16 // indirect
-	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/russross/blackfriday v1.5.2 // indirect
 	github.com/sergi/go-diff v1.2.0 // indirect
 	github.com/shurcooL/go v0.0.0-20200502201357-93f07166e636 // indirect

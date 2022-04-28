@@ -6,6 +6,11 @@ import searchResult from './searchResult'
 (window.__goplaidVueComponentRegisters =
     window.__goplaidVueComponentRegisters || []).push((Vue, vueOptions) => {
     window.searchBus = new Vue()
+    window.getURLWithBaseURI = function(path) {
+        var r = document.baseURI + path
+        return r.replaceAll(/(?<!:)\/{2,}/g, "/")
+    }
+
     Vue.component("toc", toc)
     Vue.component("search", search)
     Vue.component("search-result", searchResult)
