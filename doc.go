@@ -75,7 +75,8 @@ func (b *DocBuilder) MarshalHTML(ctx context.Context) ([]byte, error) {
 				Div(
 					b.children...,
 				).Class("border-t"),
-			).Class("px-16 pb-12 pt-4"),
+			).Class("px-16 pb-12 pt-4").
+				Id("docMainBox"),
 		).Class("flex flex-grow flex-col"),
 		Div(
 			Div(

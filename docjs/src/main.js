@@ -18,7 +18,7 @@ import searchResult from './searchResult'
         var h = new URLSearchParams(window.location.search).get("h")
         if (h) {
             const re = new RegExp(`(>[^<]*)(${h})([^>]*<)`, 'gi')
-            document.getElementById("docContentBox").innerHTML = document.getElementById("docContentBox").innerHTML.replaceAll(re, "$1<span class='search-h bg-yellow-300'>$2</span>$3")
+            document.getElementById("docMainBox").innerHTML = document.getElementById("docMainBox").innerHTML.replaceAll(re, "$1<span class='search-h bg-yellow-300'>$2</span>$3")
             setTimeout(() => {
                 document.querySelector(".search-h").scrollIntoView()
             }, 100)
