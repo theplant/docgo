@@ -57,23 +57,36 @@ func (b *DocBuilder) GetPageURL() (r string) {
 func (b *DocBuilder) MarshalHTML(ctx context.Context) ([]byte, error) {
 	return Div(
 		Div(
-			H1(b.title).Class("mb-8"),
-			If(len(b.abstractText) > 0,
-				Div(
-					Text(b.abstractText),
-				).Class("mb-8 text-xl font-normal"),
-			),
 			Div(
-				b.children...,
-			).Class("border-t"),
-		).Class("flex-grow px-10 py-8"),
+				Button("").Children(
+					Div(
+						menuIcon,
+					).Class("w-4 h-4 fill-current text-gray-300"),
+				).Class("w-12 h-12 p-4").
+					Attr("@click", "vars.hideAside = !vars.hideAside"),
+			).Class("flex flex-row"),
+			Div(
+				H1(b.title).Class("mb-8"),
+				If(len(b.abstractText) > 0,
+					Div(
+						Text(b.abstractText),
+					).Class("mb-8 text-xl font-normal"),
+				),
+				Div(
+					b.children...,
+				).Class("border-t"),
+			).Class("px-16 pb-12 pt-4"),
+		).Class("flex flex-col"),
 		Div(
 			Div(
 				Text("On This Page"),
 				RawHTML("<toc></toc>"),
 			).Class("sticky top-4 w-52"),
 		).Class("font-medium text-base hidden sm:block text-gray-600"),
-	).Class("flex flex-row w-full").Id("docContentBox").MarshalHTML(ctx)
+	).
+		Class("flex flex-row w-full").
+		Id("docContentBox").
+		MarshalHTML(ctx)
 }
 
 func (b *DocBuilder) plainText() string {
@@ -135,3 +148,12 @@ func html2text(in []byte) string {
 
 	return r.String()
 }
+
+var menuIcon = RawHTML(`
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16px" height="16px" viewBox="0 0 16 16" version="1.1">
+<g id="surface1">
+<path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;" d="M 2 12 L 2 11 L 14 11 L 14 12 Z M 2 8.5 L 2 7.5 L 14 7.5 L 14 8.5 Z M 2 5 L 2 4 L 14 4 L 14 5 Z M 2 5 "/>
+</g>
+</svg>
+`)

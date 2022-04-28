@@ -202,7 +202,8 @@ func (b *Builder) layout(body *DocBuilder) (r HTMLComponent) {
 							).Class("flex flex-col w-full bg-white overflow-x-hidden overflow-y-auto"),
 						).Class("flex h-full"),
 					).Class("flex-1 flex flex-col overflow-hidden"),
-				).Class("flex h-screen"),
+				).Class("flex h-screen").
+					Attr(web.InitContextVars, `{hideAside: false}`),
 			).Id("app").
 				Attr("v-cloak", true),
 		),
@@ -246,7 +247,8 @@ func (b *Builder) aside(doc *DocBuilder) (r HTMLComponent) {
 			RawHTML("<search></search>"),
 		).Class("h-12"),
 		content,
-	).Class("flex flex-col w-80 h-full bg-gray-50 border-r border-gray-200")
+	).Class("flex flex-col w-80 h-full bg-gray-50 border-r border-gray-200").
+		Attr("v-show", "!vars.hideAside")
 }
 
 var startTime = time.Now()
