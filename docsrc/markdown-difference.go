@@ -26,6 +26,6 @@ var MarkdownDifference = Doc(
 		Code("~"),
 	),
 	ch.Code(HowToSayHelloWithCodeBlockSample).Language("go"),
-).Title("The difference with Github Flavored Markdown")
+).Title("Markdown difference")
 
 // @snippet_end

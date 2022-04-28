@@ -4,14 +4,9 @@ import "github.com/theplant/docgo"
 
 var DocTree = []interface{}{
 	Home,
-	&docgo.DocsGroup{
-		Title: "Essentials",
-		Docs: []*docgo.DocBuilder{
-			GithubPagesIntegration,
-			UseWithHtmlGo,
-			MarkdownDifference,
-		},
-	},
+	UseWithHtmlGo,
+	GithubPagesIntegration,
+	MarkdownDifference,
 	&docgo.DocsGroup{
 		Title: "Samples",
 		Docs: []*docgo.DocBuilder{

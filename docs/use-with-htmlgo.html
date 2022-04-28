@@ -2,7 +2,7 @@
 
 <html>
 <head>
-<title>Essentials - Use with htmlgo - docgo Document</title>
+<title>Use with htmlgo - docgo Document</title>
 
 <meta name='description' content='The ability to use any html code inside your documentation is pretty good'>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
@@ -26,18 +26,16 @@
 <a href='index.html' class='inline-block px-4 truncate break-words w-64 text-gray-700'>Introduction</a>
 </li>
 
-<li class='cursor-default px-4 truncate break-words w-64'>Essentials</li>
-
 <li>
-<a href='github-pages-integration.html' class='inline-block pl-10 pr-4 truncate break-words w-64 text-gray-700'>Github Pages Integration</a>
+<a href='use-with-htmlgo.html' class='inline-block px-4 truncate break-words w-64 text-blue-500'>Use with htmlgo</a>
 </li>
 
 <li>
-<a href='use-with-htmlgo.html' class='inline-block pl-10 pr-4 truncate break-words w-64 text-blue-500'>Use with htmlgo</a>
+<a href='github-pages-integration.html' class='inline-block px-4 truncate break-words w-64 text-gray-700'>Github Pages Integration</a>
 </li>
 
 <li>
-<a href='the-difference-with-github-flavored-markdown.html' class='inline-block pl-10 pr-4 truncate break-words w-64 text-gray-700'>The difference with Github Flavored Markdown</a>
+<a href='markdown-difference.html' class='inline-block px-4 truncate break-words w-64 text-gray-700'>Markdown difference</a>
 </li>
 
 <li class='cursor-default px-4 truncate break-words w-64'>Samples</li>
@@ -50,7 +48,7 @@
 
 <main class='flex flex-col w-full bg-white overflow-x-hidden overflow-y-auto'>
 <div id='docContentBox' class='flex flex-row w-full'>
-<div class='flex flex-col'>
+<div class='flex flex-grow flex-col'>
 <div class='flex flex-row'>
 <button @click='vars.hideAside = !vars.hideAside' class='w-12 h-12 p-4'>
 <div class='w-4 h-4 fill-current text-gray-300'>
@@ -75,7 +73,7 @@
 
 <p>Take a look at this example:</p>
 
-<highlightjs :language='"go"' :code='"var s = []struct {\n\tname string\n}{{name: \"123\"}}\n\nvar MarkdownDifference = Doc(\n\n\tH2(\"Be aware the Go source code limitations\"),\n\n\tP(\n\t\tText(\"Since it&#39;s not possible to write\"),\n\t\tCode(\"`\"),\n\t\tText(\"if you are writing inside a\"),\n\t\tA().Text(\"go raw string literals\").Href(\"https://golang.org/ref/spec#String_literals\"),\n\t\tText(\"which normally used to pass in \"),\n\t\tCode(\"Markdown\"),\n\t\tText(\"func, So we have to replace it with\"),\n\t\tCode(\"~\"),\n\t),\n\tch.Code(HowToSayHelloWithCodeBlockSample).Language(\"go\"),\n).Title(\"The difference with Github Flavored Markdown\")\n"'></highlightjs>
+<highlightjs :language='"go"' :code='"var s = []struct {\n\tname string\n}{{name: \"123\"}}\n\nvar MarkdownDifference = Doc(\n\n\tH2(\"Be aware the Go source code limitations\"),\n\n\tP(\n\t\tText(\"Since it&#39;s not possible to write\"),\n\t\tCode(\"`\"),\n\t\tText(\"if you are writing inside a\"),\n\t\tA().Text(\"go raw string literals\").Href(\"https://golang.org/ref/spec#String_literals\"),\n\t\tText(\"which normally used to pass in \"),\n\t\tCode(\"Markdown\"),\n\t\tText(\"func, So we have to replace it with\"),\n\t\tCode(\"~\"),\n\t),\n\tch.Code(HowToSayHelloWithCodeBlockSample).Language(\"go\"),\n).Title(\"Markdown difference\")\n"'></highlightjs>
 </div>
 </div>
 </div>
