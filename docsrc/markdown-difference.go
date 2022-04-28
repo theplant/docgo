@@ -26,21 +26,6 @@ var MarkdownDifference = Doc(
 		Code("~"),
 	),
 	ch.Code(HowToSayHelloWithCodeBlockSample).Language("go"),
-	Text("Which render a page like this"),
-	DocLink(HowToSayHelloWithCodeBlock),
-).Title("The difference with Github Flavored Markdown").
-	Tables(
-		ChildrenTable(
-			ContentGroup(
-				HowToSayHelloWithCodeBlock,
-			).Title("Samples"),
-		),
+).Title("Markdown difference")
 
-		RelatedTable(
-			ContentGroup(
-				UseWithHtmlGo,
-			),
-		),
-	)
-
-	// @snippet_end
+// @snippet_end

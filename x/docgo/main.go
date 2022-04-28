@@ -110,8 +110,8 @@ func copyAndReplaceFiles(box embed.FS, dir string, template string, pkg string) 
 
 	fmt.Println("Done")
 
-	replaceInFiles(dir, "github.com/theplant/docgo/x/docgo/template", pkg)
-	replaceInFiles(dir, "docgoPackageName", filepath.Base(pkg))
+	replaceInFiles("docsrc", "github.com/theplant/docgo/x/docgo/template", pkg)
+	replaceInFiles("docsrc", "docgoPackageName", filepath.Base(pkg))
 
 	return
 }

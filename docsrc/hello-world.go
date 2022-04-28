@@ -34,15 +34,7 @@ var HelloWorldWithChildren = Doc(
 Write some beautiful docs
 `),
 ).Title("Hello World with children").
-	AbstractText("Hello world with children is to describe how to add children docs").
-	Tables(
-		ChildrenTable(
-			ContentGroup(
-				HowToSayHello,
-				HowToGoodBye,
-			).Title("Essentials"),
-		),
-	)
+	AbstractText("Hello world with children is to describe how to add children docs")
 
 var HowToSayHello = Doc(Markdown(`
 ## Say Hello

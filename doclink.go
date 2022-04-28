@@ -19,9 +19,9 @@ func DocLink(doc *DocBuilder) (r *DocLinkBuilder) {
 }
 
 func (b *DocLinkBuilder) MarshalHTML(ctx context.Context) (r []byte, err error) {
-	if b.doc == nil || b.doc.node == nil {
+	if b.doc == nil {
 		return
 	}
-	b.tag.Text(b.doc.node.Title).Href(b.doc.node.GetPageURL())
+	b.tag.Text(b.doc.title).Href(b.doc.GetPageURL())
 	return b.tag.MarshalHTML(ctx)
 }

@@ -3,6 +3,7 @@ package docgo
 import (
 	"context"
 	"embed"
+	"encoding/json"
 	"fmt"
 	"io"
 	"io/fs"
@@ -20,16 +21,15 @@ import (
 )
 
 type Builder struct {
-	home         *DocBuilder
-	header       HTMLComponent
-	footer       HTMLComponent
-	articleTree  *DocNode
-	mux          *http.ServeMux
-	mounts       []*mount
-	builder      *web.Builder
-	assets       embed.FS
-	assetsPrefix string
-	sitePrefix   string
+	docTree       []interface{}
+	mux           *http.ServeMux
+	mounts        []*mount
+	searchIndexes []*searchIndex
+	builder       *web.Builder
+	assets        embed.FS
+	assetsPrefix  string
+	sitePrefix    string
+	mainPageTitle string
 }
 
 func New() (r *Builder) {
@@ -39,11 +39,6 @@ func New() (r *Builder) {
 		assetsPrefix: "/assets/",
 	}
 	return
-}
-
-func (b *Builder) Home(v *DocBuilder) (r *Builder) {
-	b.home = v
-	return b
 }
 
 func (b *Builder) Assets(prefix string, v embed.FS) (r *Builder) {
@@ -57,28 +52,43 @@ func (b *Builder) SitePrefix(v string) (r *Builder) {
 	return b
 }
 
-func (b *Builder) Header(v HTMLComponent) (r *Builder) {
-	b.header = v
+func (b *Builder) MainPageTitle(v string) (r *Builder) {
+	b.mainPageTitle = v
 	return b
 }
 
-func (b *Builder) Footer(v HTMLComponent) (r *Builder) {
-	b.footer = v
+type DocsGroup struct {
+	Title string
+	Docs  []*DocBuilder
+}
+
+// *DocBuilder, *DocsGroup
+func (b *Builder) DocTree(vs ...interface{}) (r *Builder) {
+	b.docTree = vs
 	return b
 }
 
-func (b *Builder) ArticleTree() (r *DocNode) {
-	return b.articleTree
+type searchIndex struct {
+	URL   string
+	Title string
+	Body  string
 }
 
 func (b *Builder) Build() (r *Builder) {
-	ctx := context.TODO()
-	_, err := b.home.MarshalHTML(ctx)
-	if err != nil {
-		panic(err)
+	for _, di := range b.docTree {
+		switch v := di.(type) {
+		case *DocBuilder:
+			b.addToMounts(v)
+			b.addToSearchIndexes(v)
+		case *DocsGroup:
+			for _, sd := range v.Docs {
+				b.addToMounts(sd)
+				b.addToSearchIndexes(sd)
+			}
+		default:
+			panic("only support *DocBuilder,*DocsGroup")
+		}
 	}
-	b.articleTree = b.home.node
-	b.addToMounts(b.articleTree)
 	sort.Sort(uriSorter(b.mounts))
 	b.initMuxWithStatic()
 	for _, m := range b.mounts {
@@ -88,6 +98,12 @@ func (b *Builder) Build() (r *Builder) {
 
 	assetsFs := http.FileServer(http.FS(b.assets))
 	b.mux.Handle(b.assetsPrefix, assetsFs)
+
+	b.mux.HandleFunc("/search_indexes.json", func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(b.searchIndexes)
+	})
+
 	return b
 }
 
@@ -106,6 +122,7 @@ func (b *Builder) BuildStaticSite(dir string) {
 	var paths = []string{
 		"/index.css",
 		"/index.js",
+		"/search_indexes.json",
 	}
 
 	for _, m := range b.mounts {
@@ -145,13 +162,28 @@ func (b *Builder) BuildStaticSite(dir string) {
 		}()
 
 	}
-
 }
 
 func (b *Builder) layout(body *DocBuilder) (r HTMLComponent) {
+	pageTitle := body.title
+	for _, di := range b.docTree {
+		switch v := di.(type) {
+		case *DocsGroup:
+			for _, sd := range v.Docs {
+				if sd == body {
+					pageTitle = fmt.Sprintf("%s - %s", v.Title, pageTitle)
+					break
+				}
+			}
+		}
+	}
+	if b.mainPageTitle != "" {
+		pageTitle = fmt.Sprintf("%s - %s", pageTitle, b.mainPageTitle)
+	}
+
 	return HTML(
 		Head(
-			Title(body.GetPageTitle()),
+			Title(pageTitle),
 			Meta().Name("description").Content(body.abstractText),
 			RawHTML(`<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">`),
 			If(len(b.sitePrefix) > 0, Base().Href(b.sitePrefix)),
@@ -160,65 +192,63 @@ func (b *Builder) layout(body *DocBuilder) (r HTMLComponent) {
 		),
 		Body(
 			Div(
-				b.header,
-				b.navigation(body),
-				body,
-				b.footer,
+				Div(
+					Div(
+						Div(
+							b.aside(body),
+							Main(
+								body,
+								RawHTML("<search-result></search-result>"),
+							).Class("flex flex-col w-full bg-white overflow-x-hidden overflow-y-auto"),
+						).Class("flex h-full"),
+					).Class("flex-1 flex flex-col overflow-hidden"),
+				).Class("flex h-screen").
+					Attr(web.InitContextVars, `{hideAside: false}`),
 			).Id("app").
 				Attr("v-cloak", true),
 		),
 	)
 }
 
-func (b *Builder) navigation(doc *DocBuilder) (r HTMLComponent) {
-
-	items := parentDocNodes(doc)
-
-	content := Ul().Attr("aria-label", "Breadcrumbs").
-		Class("md:flex list-none lg:max-w-5xl mx-auto px-6 sm:px-10")
-
-	for i := len(items) - 1; i >= 0; i-- {
-		subItems := items[i].ChildNodes
-		subContent := Ul().Class("text-white absolute left-0 top-6 z-10 bg-gray-700 pl-8 pr-6 py-4 m-0 pb-0 nav-subitem hidden w-max")
-		for _, si := range subItems {
-			subContent.AppendChildren(
-				Li(
-					A().Href(si.GetPageURL()).Text(si.Title).
-						Class("text-gray-50"),
-				).Class("my-4"),
+func (b *Builder) aside(doc *DocBuilder) (r HTMLComponent) {
+	content := Ul().Class("px-0 mx-0 text-base font-normal list-none text-gray-700")
+	for _, di := range b.docTree {
+		switch v := di.(type) {
+		case *DocBuilder:
+			link := A().Href(v.GetPageURL()).Text(v.title).Class("inline-block px-4 truncate break-words w-64")
+			if v == doc {
+				link.Class("text-blue-500")
+			} else {
+				link.Class("text-gray-700")
+			}
+			content.AppendChildren(
+				Li(link),
 			)
+		case *DocsGroup:
+			content.AppendChildren(
+				Li().Text(v.Title).Class("cursor-default px-4 truncate break-words w-64"),
+			)
+			for _, sd := range v.Docs {
+				link := A().Href(sd.GetPageURL()).Text(sd.title).Class("inline-block pl-10 pr-4 truncate break-words w-64")
+				if sd == doc {
+					link.Class("text-blue-500")
+				} else {
+					link.Class("text-gray-700")
+				}
+				content.AppendChildren(
+					Li(link),
+				)
+			}
 		}
-		content.AppendChildren(
-			Li(
-				Div(
-					If(i < (len(items)-1),
-						Div(
-							arrowIcon,
-						).Class("w-3 m-2 fill-current text-gray-500"),
-					),
-					A().Href(items[i].GetPageURL()).Text(items[i].Title).
-						Class("text-gray-50"),
-				).Class("flex"),
-				If(len(subItems) > 0, subContent),
-			).Class("md:float-left relative nav-item mt-0"),
-		)
 	}
 
-	return Nav(content).Class("bg-gray-700 py-3 text-base font-normal mb-8")
-}
-
-func parentDocNodes(doc *DocBuilder) []*DocNode {
-	if doc.node == nil {
-		return []*DocNode{}
-	}
-
-	var items = []*DocNode{doc.node}
-	var current = doc.node
-	for current.ParentNode != nil {
-		current = current.ParentNode
-		items = append(items, current)
-	}
-	return items
+	return Aside(
+		Div(
+			RawHTML("<search></search>"),
+		).Class("h-12"),
+		content,
+	).Class("flex flex-col w-80 h-full bg-gray-50 border-r border-gray-200").
+		Attr("v-show", "!vars.hideAside")
 }
 
 var startTime = time.Now()
@@ -243,19 +273,22 @@ func (s uriSorter) Less(i, j int) bool {
 	return len(s[i].path) > len(s[j].path)
 }
 
-func (b *Builder) addToMounts(node *DocNode) {
-	// println(node.URL)
+func (b *Builder) addToMounts(d *DocBuilder) {
 	b.mounts = append(b.mounts,
-		&mount{filepath.Join("/", node.GetPageURL()), func(w http.ResponseWriter, r *http.Request) {
-			err := Fprint(w, b.layout(node.Doc), context.TODO())
+		&mount{filepath.Join("/", d.GetPageURL()), func(w http.ResponseWriter, r *http.Request) {
+			err := Fprint(w, b.layout(d), context.TODO())
 			if err != nil {
 				panic(err)
 			}
 		}})
+}
 
-	for _, c := range node.ChildNodes {
-		b.addToMounts(c)
-	}
+func (b *Builder) addToSearchIndexes(d *DocBuilder) {
+	b.searchIndexes = append(b.searchIndexes, &searchIndex{
+		URL:   d.GetPageURL(),
+		Title: d.title,
+		Body:  d.plainText(),
+	})
 }
 
 func (b *Builder) initMuxWithStatic() {
