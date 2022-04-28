@@ -7,8 +7,7 @@ import searchResult from './searchResult'
     window.__goplaidVueComponentRegisters || []).push((Vue, vueOptions) => {
     window.searchBus = new Vue()
     window.getURLWithBaseURI = function(path) {
-        var r = document.baseURI + path
-        return r.replaceAll(/(?<!:)\/{2,}/g, "/")
+        return document.baseURI.replace(/\/+$/, "") + ("/"+path).replaceAll(/\/{2,}/g, "/")
     }
 
     Vue.component("toc", toc)
