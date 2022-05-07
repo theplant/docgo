@@ -247,7 +247,7 @@ func (b *Builder) aside(doc *DocBuilder) (r HTMLComponent) {
 			RawHTML("<search></search>"),
 		).Class("h-12"),
 		content,
-	).Class("flex flex-col w-80 h-full bg-gray-50 border-r border-gray-200").
+	).Class("flex flex-col w-80 h-full bg-gray-50 border-r border-gray-200 overflow-y-auto").
 		Attr("v-show", "!vars.hideAside")
 }
 
