@@ -75,15 +75,15 @@ func (b *DocBuilder) MarshalHTML(ctx context.Context) ([]byte, error) {
 				Div(
 					b.children...,
 				).Class("border-t"),
-			).Class("px-16 pb-12 pt-4").
+			).Class("px-16 pb-12 pt-4 overflow-auto").
 				Id("docMainBox"),
-		).Class("flex flex-grow flex-col"),
+		).Class("flex flex-grow flex-col w-2/3"),
 		Div(
 			Div(
 				Text("On This Page"),
 				RawHTML("<toc></toc>"),
 			).Class("sticky top-4 w-52"),
-		).Class("font-medium text-base hidden sm:block text-gray-600"),
+		).Class("font-medium text-base hidden xl:block text-gray-600 pt-4"),
 	).
 		Class("flex flex-row w-full").
 		Id("docContentBox").
