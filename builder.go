@@ -15,7 +15,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/goplaid/web"
+	"github.com/qor5/web"
 	"github.com/theplant/docgo/ch"
 	. "github.com/theplant/htmlgo"
 )
