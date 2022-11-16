@@ -211,32 +211,32 @@ func (b *Builder) layout(body *DocBuilder) (r HTMLComponent) {
 }
 
 func (b *Builder) aside(doc *DocBuilder) (r HTMLComponent) {
-	content := Ul().Class("px-0 mx-0 text-base font-normal list-none text-gray-700")
+	content := Ul().Class("px-0 py-3 mx-0 text-base font-normal list-none text-gray-700")
 	for _, di := range b.docTree {
 		switch v := di.(type) {
 		case *DocBuilder:
-			link := A().Href(v.GetPageURL()).Text(v.title).Class("inline-block px-4 truncate break-words w-64")
+			link := A().Href(v.GetPageURL()).Text(v.title).Class("inline-block px-4 py-1 truncate break-words w-64 hover:text-blue-400")
 			if v == doc {
 				link.Class("text-blue-500")
 			} else {
 				link.Class("text-gray-700")
 			}
 			content.AppendChildren(
-				Li(link),
+				Li(link).Class("m-0"),
 			)
 		case *DocsGroup:
 			content.AppendChildren(
-				Li().Text(v.Title).Class("cursor-default px-4 truncate break-words w-64"),
+				Li().Text(v.Title).Class("cursor-default px-4 py-1 truncate break-words w-64 m-0"),
 			)
 			for _, sd := range v.Docs {
-				link := A().Href(sd.GetPageURL()).Text(sd.title).Class("inline-block pl-10 pr-4 truncate break-words w-64")
+				link := A().Href(sd.GetPageURL()).Text(sd.title).Class("inline-block pl-10 pr-4 py-1 truncate break-words w-64 hover:text-blue-400")
 				if sd == doc {
 					link.Class("text-blue-500")
 				} else {
 					link.Class("text-gray-700")
 				}
 				content.AppendChildren(
-					Li(link),
+					Li(link).Class("m-0"),
 				)
 			}
 		}
