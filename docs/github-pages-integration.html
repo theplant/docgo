@@ -18,30 +18,30 @@
 <div v-init-context:vars='{hideAside: false}' class='flex h-screen'>
 <div class='flex-1 flex flex-col overflow-hidden'>
 <div class='flex h-full'>
-<aside v-show='!vars.hideAside' class='flex flex-col w-80 h-full bg-gray-50 border-r border-gray-200 overflow-y-auto'>
+<aside v-show='!vars.hideAside' id='menuScroller' class='flex flex-col w-80 h-full bg-gray-50 border-r border-gray-200 overflow-y-auto'>
 <div class='h-12'><search></search></div>
 
 <ul class='px-0 py-3 mx-0 text-base font-normal list-none text-gray-700'>
 <li class='m-0'>
-<a href='index.html' class='inline-block px-4 py-1 truncate break-words w-64 hover:text-blue-400 text-gray-700'>Introduction</a>
+<a href='index.html' id='index.html' onclick='window.storeMenuState("index.html")' class='inline-block px-4 py-1 truncate break-words w-64 hover:text-blue-400 text-gray-700'>Introduction</a>
 </li>
 
 <li class='m-0'>
-<a href='use-with-htmlgo.html' class='inline-block px-4 py-1 truncate break-words w-64 hover:text-blue-400 text-gray-700'>Use with htmlgo</a>
+<a href='use-with-htmlgo.html' id='use-with-htmlgo.html' onclick='window.storeMenuState("use-with-htmlgo.html")' class='inline-block px-4 py-1 truncate break-words w-64 hover:text-blue-400 text-gray-700'>Use with htmlgo</a>
 </li>
 
 <li class='m-0'>
-<a href='github-pages-integration.html' class='inline-block px-4 py-1 truncate break-words w-64 hover:text-blue-400 text-blue-500'>Github Pages Integration</a>
+<a href='github-pages-integration.html' id='github-pages-integration.html' onclick='window.storeMenuState("github-pages-integration.html")' class='inline-block px-4 py-1 truncate break-words w-64 hover:text-blue-400 text-blue-500'>Github Pages Integration</a>
 </li>
 
 <li class='m-0'>
-<a href='markdown-difference.html' class='inline-block px-4 py-1 truncate break-words w-64 hover:text-blue-400 text-gray-700'>Markdown difference</a>
+<a href='markdown-difference.html' id='markdown-difference.html' onclick='window.storeMenuState("markdown-difference.html")' class='inline-block px-4 py-1 truncate break-words w-64 hover:text-blue-400 text-gray-700'>Markdown difference</a>
 </li>
 
 <li class='cursor-default px-4 py-1 truncate break-words w-64 m-0'>Samples</li>
 
 <li class='m-0'>
-<a href='hello-world.html' class='inline-block pl-10 pr-4 py-1 truncate break-words w-64 hover:text-blue-400 text-gray-700'>Hello World</a>
+<a href='hello-world.html' id='hello-world.html' onclick='window.storeMenuState("hello-world.html")' class='inline-block pl-10 pr-4 py-1 truncate break-words w-64 hover:text-blue-400 text-gray-700'>Hello World</a>
 </li>
 </ul>
 </aside>

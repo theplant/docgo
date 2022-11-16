@@ -215,7 +215,10 @@ func (b *Builder) aside(doc *DocBuilder) (r HTMLComponent) {
 	for _, di := range b.docTree {
 		switch v := di.(type) {
 		case *DocBuilder:
-			link := A().Href(v.GetPageURL()).Text(v.title).Class("inline-block px-4 py-1 truncate break-words w-64 hover:text-blue-400")
+			pageURL := v.GetPageURL()
+			link := A().Href(pageURL).Text(v.title).Class("inline-block px-4 py-1 truncate break-words w-64 hover:text-blue-400").
+				Attr("id", pageURL).
+				Attr("onclick", fmt.Sprintf(`window.storeMenuState("%s")`, pageURL))
 			if v == doc {
 				link.Class("text-blue-500")
 			} else {
@@ -229,7 +232,10 @@ func (b *Builder) aside(doc *DocBuilder) (r HTMLComponent) {
 				Li().Text(v.Title).Class("cursor-default px-4 py-1 truncate break-words w-64 m-0"),
 			)
 			for _, sd := range v.Docs {
-				link := A().Href(sd.GetPageURL()).Text(sd.title).Class("inline-block pl-10 pr-4 py-1 truncate break-words w-64 hover:text-blue-400")
+				pageURL := sd.GetPageURL()
+				link := A().Href(sd.GetPageURL()).Text(sd.title).Class("inline-block pl-10 pr-4 py-1 truncate break-words w-64 hover:text-blue-400").
+					Attr("id", pageURL).
+					Attr("onclick", fmt.Sprintf(`window.storeMenuState("%s")`, pageURL))
 				if sd == doc {
 					link.Class("text-blue-500")
 				} else {
@@ -248,7 +254,8 @@ func (b *Builder) aside(doc *DocBuilder) (r HTMLComponent) {
 		).Class("h-12"),
 		content,
 	).Class("flex flex-col w-80 h-full bg-gray-50 border-r border-gray-200 overflow-y-auto").
-		Attr("v-show", "!vars.hideAside")
+		Attr("v-show", "!vars.hideAside").
+		Attr("id", "menuScroller")
 }
 
 var startTime = time.Now()
