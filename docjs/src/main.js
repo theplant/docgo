@@ -34,33 +34,31 @@ import searchResult from './searchResult'
         return null;
     }
 
+    // resrore menu state
     document.addEventListener("DOMContentLoaded", function() {
-        // restore menu state
-        {
-            var path = window.location.pathname.replace(/^\//, '');
-            var stateCookieVal = getCookie("menuState");
-            if (!stateCookieVal) {
-                document.getElementById(path).scrollIntoView({block: "center"});
-                return;
-            }
-            var state = JSON.parse(stateCookieVal);
-            if (path != state.activeMenuURL) {
-                document.getElementById(path).scrollIntoView({block: "center"});
-                return;
-            }
-            document.getElementById("menuScroller").scrollTop = state.scrollTop;
+        var path = window.location.pathname.replace(/^\//, '');
+        var stateCookieVal = getCookie("menuState");
+        if (!stateCookieVal) {
+            document.getElementById(path).scrollIntoView({block: "center"});
+            return;
         }
+        var state = JSON.parse(stateCookieVal);
+        if (path != state.activeMenuURL) {
+            document.getElementById(path).scrollIntoView({block: "center"});
+            return;
+        }
+        document.getElementById("menuScroller").scrollTop = state.scrollTop;
+    })
 
-        // search
-        {
-            var h = new URLSearchParams(window.location.search).get("h")
-            if (h) {
-                const re = new RegExp(`(>[^<]*)(${h})([^>]*<)`, 'gi')
-                document.getElementById("docMainBox").innerHTML = document.getElementById("docMainBox").innerHTML.replaceAll(re, "$1<span class='search-h bg-yellow-300'>$2</span>$3")
-                setTimeout(() => {
-                    document.querySelector(".search-h").scrollIntoView()
-                }, 100)
-            }
+    // search highlight
+    document.addEventListener("DOMContentLoaded", function() {
+        var h = new URLSearchParams(window.location.search).get("h")
+        if (h) {
+            const re = new RegExp(`(>[^<]*)(${h})([^>]*<)`, 'gi')
+            document.getElementById("docMainBox").innerHTML = document.getElementById("docMainBox").innerHTML.replaceAll(re, "$1<span class='search-h bg-yellow-300'>$2</span>$3")
+            setTimeout(() => {
+                document.querySelector(".search-h").scrollIntoView()
+            }, 100)
         }
     })
 });
