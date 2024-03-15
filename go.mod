@@ -8,7 +8,7 @@ require (
 	github.com/qor5/web v1.2.3
 	github.com/shurcooL/github_flavored_markdown v0.0.0-20210228213109-c3a9aa474629
 	github.com/theplant/htmlgo v1.0.3
-	golang.org/x/net v0.0.0-20211105192438-b53810dc28af
+	golang.org/x/net v0.17.0
 )
 
 require (
@@ -30,5 +30,5 @@ require (
 	github.com/sourcegraph/annotate v0.0.0-20160123013949-f4cad6c6324d // indirect
 	github.com/sourcegraph/syntaxhighlight v0.0.0-20170531221838-bd320f5d308e // indirect
 	github.com/sunfmin/reflectutils v1.0.2 // indirect
-	golang.org/x/sys v0.1.0 // indirect
+	golang.org/x/sys v0.13.0 // indirect
 )
