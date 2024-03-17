@@ -15,10 +15,11 @@
 
 <body>
 <div id='app' v-cloak>
-<div v-init-context:vars='{hideAside: false}' class='flex h-screen'>
+<go-plaid-scope v-slot='{ locals }' :init='{hideAside: false}'>
+<div class='flex h-screen'>
 <div class='flex-1 flex flex-col overflow-hidden'>
 <div class='flex h-full'>
-<aside v-show='!vars.hideAside' id='menuScroller' class='flex flex-col w-80 h-full bg-gray-50 border-r border-gray-200 overflow-y-auto'>
+<aside v-if='!locals.hideAside' id='menuScroller' class='flex flex-col w-80 h-full bg-gray-50 border-r border-gray-200 overflow-y-auto'>
 <div class='h-12'><search></search></div>
 
 <ul class='px-0 py-3 mx-0 text-base font-normal list-none text-gray-700'>
@@ -50,7 +51,7 @@
 <div id='docContentBox' class='flex flex-row w-full'>
 <div class='flex flex-grow flex-col w-2/3'>
 <div class='flex flex-row'>
-<button @click='vars.hideAside = !vars.hideAside' class='w-12 h-12 p-4'>
+<button @click='locals.hideAside = !locals.hideAside' class='w-12 h-12 p-4'>
 <div class='w-4 h-4 fill-current text-gray-300'>
 <?xml version="1.0" encoding="UTF-8"?>
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16px" height="16px" viewBox="0 0 16 16" version="1.1">
@@ -74,7 +75,7 @@
 <ul>
 <li>Work together with <a href="https://github.com/sunfmin/snippetgo" rel="nofollow">snippetgo</a> to use real executable code as example code blocks in documentation, So that it won&#39;t be invalid or obsolete after code change, Since Go compiler will pick out the errors and you will have to fix the examples to make compiler happy, and the documentation is automatically updated.</li>
 <li>Write documentation in Go code not only you can still write markdown, But also you can access the flexibility of a programming language, to use components, and reuse parts that are duplicated.</li>
-<li>Documents exists inside go code, means it can be distributed as go packages, so it wont&#39; be restricted with directory layout.</li>
+<li>Documents exists inside go code, means it can be distributed as go packages, so it won&#39;t be restricted with directory layout.</li>
 <li>Make developer focus on writing documentation, instead of worrying about document styles.</li>
 </ul>
 
@@ -133,6 +134,7 @@ cd docsrc &amp;&amp; ./dev.sh to start your doc
 </div>
 </div>
 </div>
+</go-plaid-scope>
 </div>
 </body>
 </html>

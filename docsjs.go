@@ -10,7 +10,7 @@ import (
 var box embed.FS
 
 func JSComponentsPack() web.ComponentsPack {
-	v, err := box.ReadFile("docjs/dist/docgo.umd.min.js")
+	v, err := box.ReadFile("docjs/dist/index.js")
 	if err != nil {
 		panic(err)
 	}
@@ -19,7 +19,7 @@ func JSComponentsPack() web.ComponentsPack {
 }
 
 func CSSComponentsPack() web.ComponentsPack {
-	v, err := box.ReadFile("docjs/dist/docgo.css")
+	v, err := box.ReadFile("docjs/dist/style.css")
 	if err != nil {
 		panic(err)
 	}

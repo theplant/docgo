@@ -1,6 +1,6 @@
-module.exports = {
-    purge: ['./public/*.html', './src/**/*.{vue,js,ts,jsx,tsx}', '../**/*.go'],
-    darkMode: false, // or 'media' or 'class'
+export default {
+    content: ['./public/*.html', './src/**/*.{vue,js,ts,jsx,tsx}', '../**/*.go'],
+    darkMode: 'media', // or 'media' or 'class'
     theme: {
         extend: {},
         fontFamily: {
