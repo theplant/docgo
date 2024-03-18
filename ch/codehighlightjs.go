@@ -10,7 +10,7 @@ import (
 var assetsbox embed.FS
 
 func JSComponentsPack() web.ComponentsPack {
-	v, err := assetsbox.ReadFile("codehighlightjs/dist/codehighlight.umd.min.js")
+	v, err := assetsbox.ReadFile("codehighlightjs/dist/index.js")
 	if err != nil {
 		panic(err)
 	}
@@ -19,7 +19,7 @@ func JSComponentsPack() web.ComponentsPack {
 }
 
 func CSSComponentsPack() web.ComponentsPack {
-	v, err := assetsbox.ReadFile("codehighlightjs/dist/codehighlight.css")
+	v, err := assetsbox.ReadFile("codehighlightjs/dist/style.css")
 	if err != nil {
 		panic(err)
 	}

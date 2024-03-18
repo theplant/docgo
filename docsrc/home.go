@@ -17,7 +17,7 @@ The developer community often use markdown or in Python world use [Sphinx](https
 
 - Work together with [snippetgo](https://github.com/sunfmin/snippetgo) to use real executable code as example code blocks in documentation, So that it won't be invalid or obsolete after code change, Since Go compiler will pick out the errors and you will have to fix the examples to make compiler happy, and the documentation is automatically updated.
 - Write documentation in Go code not only you can still write markdown, But also you can access the flexibility of a programming language, to use components, and reuse parts that are duplicated.
-- Documents exists inside go code, means it can be distributed as go packages, so it wont' be restricted with directory layout.
+- Documents exists inside go code, means it can be distributed as go packages, so it won't be restricted with directory layout.
 - Make developer focus on writing documentation, instead of worrying about document styles.
 
 `),

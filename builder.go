@@ -192,18 +192,19 @@ func (b *Builder) layout(body *DocBuilder) (r HTMLComponent) {
 		),
 		Body(
 			Div(
-				Div(
+				web.Scope(
 					Div(
 						Div(
-							b.aside(body),
-							Main(
-								body,
-								RawHTML("<search-result></search-result>"),
-							).Class("flex flex-col w-full bg-white overflow-x-hidden overflow-y-auto"),
-						).Class("flex h-full"),
-					).Class("flex-1 flex flex-col overflow-hidden"),
-				).Class("flex h-screen").
-					Attr(web.InitContextVars, `{hideAside: false}`),
+							Div(
+								b.aside(body),
+								Main(
+									body,
+									RawHTML("<search-result></search-result>"),
+								).Class("flex flex-col w-full bg-white overflow-x-hidden overflow-y-auto"),
+							).Class("flex h-full"),
+						).Class("flex-1 flex flex-col overflow-hidden"),
+					).Class("flex h-screen"),
+				).VSlot("{ locals }").Init(`{hideAside: false}`),
 			).Id("app").
 				Attr("v-cloak", true),
 		),
@@ -254,8 +255,9 @@ func (b *Builder) aside(doc *DocBuilder) (r HTMLComponent) {
 		).Class("h-12"),
 		content,
 	).Class("flex flex-col w-80 h-full bg-gray-50 border-r border-gray-200 overflow-y-auto").
-		Attr("v-show", "!vars.hideAside").
+		Attr("v-if", "!locals.hideAside").
 		Attr("id", "menuScroller")
+
 }
 
 var startTime = time.Now()

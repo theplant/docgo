@@ -63,7 +63,7 @@ func (b *DocBuilder) MarshalHTML(ctx context.Context) ([]byte, error) {
 						menuIcon,
 					).Class("w-4 h-4 fill-current text-gray-300"),
 				).Class("w-12 h-12 p-4").
-					Attr("@click", "vars.hideAside = !vars.hideAside"),
+					Attr("@click", "locals.hideAside = !locals.hideAside"),
 			).Class("flex flex-row"),
 			Div(
 				H1(b.title).Class("mb-8"),
