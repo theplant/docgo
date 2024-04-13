@@ -6,7 +6,6 @@ import hljsVuePlugin from '@highlightjs/vue-plugin'
 
 hljs.registerLanguage('javascript', javascript)
 hljs.registerLanguage('go', go)
-
 ;(window.__goplaidVueComponentRegisters = window.__goplaidVueComponentRegisters || []).push(
   function (app) {
     app.use(hljsVuePlugin)
