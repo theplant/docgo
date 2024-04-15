@@ -68,10 +68,8 @@
 
 <div class='mb-8 text-xl font-normal'>The ability to use any html code inside your documentation is pretty good</div>
 
-<div class='border-t'><h2><a name="use-any-html" class="anchor" href="#use-any-html" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>Use any html</h2>
-
-<p>Use together with <a href="https://github.com/htmlgo" rel="nofollow">htmlgo</a>, basically means you can write any html you like inside your doc, This gives you a whole lot of flexibility when writing documentation.</p>
-
+<div class='border-t'><h2 id="use-any-html">Use any html</h2>
+<p>Use together with <a href="https://github.com/htmlgo">htmlgo</a>, basically means you can write any html you like inside your doc, This gives you a whole lot of flexibility when writing documentation.</p>
 <p>Take a look at this example:</p>
 
 <highlightjs :language='"go"' :code='"var s = []struct {\n\tname string\n}{{name: \"123\"}}\n\nvar MarkdownDifference = Doc(\n\n\tH2(\"Be aware the Go source code limitations\"),\n\n\tP(\n\t\tText(\"Since it&#39;s not possible to write\"),\n\t\tCode(\"`\"),\n\t\tText(\"if you are writing inside a\"),\n\t\tA().Text(\"go raw string literals\").Href(\"https://golang.org/ref/spec#String_literals\"),\n\t\tText(\"which normally used to pass in \"),\n\t\tCode(\"Markdown\"),\n\t\tText(\"func, So we have to replace it with\"),\n\t\tCode(\"~\"),\n\t),\n\tch.Code(HowToSayHelloWithCodeBlockSample).Language(\"go\"),\n).Title(\"Markdown difference\")\n"'></highlightjs>

@@ -26,3 +26,12 @@ func CSSComponentsPack() web.ComponentsPack {
 
 	return web.ComponentsPack(v)
 }
+
+func FaviconComponentsPack() web.ComponentsPack {
+	v, err := box.ReadFile("docjs/dist/favicon.ico")
+	if err != nil {
+		panic(err)
+	}
+
+	return web.ComponentsPack(v)
+}

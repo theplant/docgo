@@ -68,30 +68,23 @@
 
 <div class='mb-8 text-xl font-normal'>Write documentation with go code in a declarative way to create beautiful documentation</div>
 
-<div class='border-t'><h2><a name="why-use-docgo" class="anchor" href="#why-use-docgo" rel="nofollow" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why use docgo</h2>
-
-<p>The developer community often use markdown or in Python world use <a href="https://www.sphinx-doc.org" rel="nofollow">Sphinx</a> and <a href="https://docutils.sourceforge.io/rst.html" rel="nofollow">reStructuredText</a> to create tech documentations, We think they are nice, But because of these reasons we created this package for the Go community:</p>
-
+<div class='border-t'><h2 id="why-use-docgo">Why use docgo</h2>
+<p>The developer community often use markdown or in Python world use <a href="https://www.sphinx-doc.org">Sphinx</a> and <a href="https://docutils.sourceforge.io/rst.html">reStructuredText</a> to create tech documentations, We think they are nice, But because of these reasons we created this package for the Go community:</p>
 <ul>
-<li>Work together with <a href="https://github.com/sunfmin/snippetgo" rel="nofollow">snippetgo</a> to use real executable code as example code blocks in documentation, So that it won&#39;t be invalid or obsolete after code change, Since Go compiler will pick out the errors and you will have to fix the examples to make compiler happy, and the documentation is automatically updated.</li>
+<li>Work together with <a href="https://github.com/sunfmin/snippetgo">snippetgo</a> to use real executable code as example code blocks in documentation, So that it won't be invalid or obsolete after code change, Since Go compiler will pick out the errors and you will have to fix the examples to make compiler happy, and the documentation is automatically updated.</li>
 <li>Write documentation in Go code not only you can still write markdown, But also you can access the flexibility of a programming language, to use components, and reuse parts that are duplicated.</li>
-<li>Documents exists inside go code, means it can be distributed as go packages, so it won&#39;t be restricted with directory layout.</li>
+<li>Documents exists inside go code, means it can be distributed as go packages, so it won't be restricted with directory layout.</li>
 <li>Make developer focus on writing documentation, instead of worrying about document styles.</li>
 </ul>
 
 <h2>Getting Started</h2>
 <p>Run this script to install <code>docgo</code> binary</p>
-
 <pre><code>$ go install github.com/theplant/docgo/x/docgo@main 
 </code></pre>
-
 <p>Go to a go package that use go modules with <code>go.mod</code> in the directory. and run:</p>
-
 <pre><code>$ docgo
 </code></pre>
-
 <p>It will output something like this:</p>
-
 <pre><code>docsrc/assets/logo.png generated
 docsrc/build/main.go generated
 docsrc/dev/main.go generated
@@ -102,14 +95,10 @@ Done
 
 cd docsrc &amp;&amp; ./dev.sh to start your doc
 </code></pre>
-
-<p>Run <code>cd docsrc &amp;&amp; ./dev.sh</code> and access <a href="http://localhost:8800" rel="nofollow">http://localhost:8800</a> to see generated first doc.</p>
-
-<p>The <code>./dev.sh</code> script is using <a href="https://eradman.com/entrproject/" rel="nofollow">entr</a> to do auto restart server after you edit any go file. So make sure to have that installed if you haven&#39;t</p>
-
+<p>Run <code>cd docsrc &amp;&amp; ./dev.sh</code> and access http://localhost:8800 to see generated first doc.</p>
+<p>The <code>./dev.sh</code> script is using <a href="https://eradman.com/entrproject/">entr</a> to do auto restart server after you edit any go file. So make sure to have that installed if you haven't</p>
 <pre><code>$ brew install entr
 </code></pre>
-
 <p>Then you can go back to the <code>docsrc</code> directory to edit and create go files to update docs.</p>
 
 <p>The following code is used to build this doc
