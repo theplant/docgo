@@ -1,12 +1,13 @@
 module github.com/theplant/docgo
 
-go 1.22
+go 1.22.2
 
 require (
 	github.com/iancoleman/strcase v0.3.0
 	github.com/manifoldco/promptui v0.9.0
 	github.com/qor5/web/v3 v3.0.1-0.20240415033659-95e180dfdf80
 	github.com/theplant/htmlgo v1.0.3
+	github.com/theplant/osenv v0.0.1
 	github.com/yuin/goldmark v1.7.1
 	golang.org/x/net v0.24.0
 )

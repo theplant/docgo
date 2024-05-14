@@ -3,17 +3,15 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"os"
 
 	"github.com/theplant/docgo"
 	"github.com/theplant/docgo/x/docgo/template/docsrc"
+	"github.com/theplant/osenv"
 )
 
+var port = osenv.Get("PORT", "The port to serve on", "8800")
+
 func main() {
-	port := os.Getenv("PORT")
-	if len(port) == 0 {
-		port = "8800"
-	}
 	fmt.Println("Starting docs at :" + port)
 	http.Handle("/", docgo.New().
 		MainPageTitle("My Document").
