@@ -35,4 +35,4 @@ require (
 	golang.org/x/sys v0.18.0 // indirect
 )
 
-replace github.com/qor5/web => ../qor5/web
+// replace github.com/qor5/web => ../qor5/web
