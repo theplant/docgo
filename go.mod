@@ -1,8 +1,7 @@
 module github.com/theplant/docgo
 
 go 1.22
-
-toolchain go1.22.1
+toolchain go1.24.1
 
 require (
 	github.com/iancoleman/strcase v0.3.0
@@ -10,7 +9,7 @@ require (
 	github.com/qor5/web v1.2.3
 	github.com/shurcooL/github_flavored_markdown v0.0.0-20210228213109-c3a9aa474629
 	github.com/theplant/htmlgo v1.0.3
-	golang.org/x/net v0.22.0
+	golang.org/x/net v0.36.0
 )
 
 require (
@@ -32,7 +31,7 @@ require (
 	github.com/sourcegraph/annotate v0.0.0-20160123013949-f4cad6c6324d // indirect
 	github.com/sourcegraph/syntaxhighlight v0.0.0-20170531221838-bd320f5d308e // indirect
 	github.com/sunfmin/reflectutils v1.0.3 // indirect
-	golang.org/x/sys v0.18.0 // indirect
+	golang.org/x/sys v0.30.0 // indirect
 )
 
 replace github.com/qor5/web => ../qor5/web
