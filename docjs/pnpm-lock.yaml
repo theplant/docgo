@@ -10,6 +10,8 @@ overrides:
   cross-spawn: '>=7.0.5'
   micromatch: '>=4.0.8'
   esbuild: '>=0.25.0'
+  rollup: '>=4.22.4'
+  nanoid: '>=3.3.8'
 
 importers:
 
@@ -50,7 +52,7 @@ importers:
         specifier: ^24.0.0
         version: 24.0.0
       nanoid:
-        specifier: ^3.3.8
+        specifier: '>=3.3.8'
         version: 3.3.11
       postcss:
         specifier: ^8.4.35
@@ -1632,6 +1634,7 @@ packages:
   whatwg-encoding@3.1.1:
     resolution: {integrity: sha512-6qN4hJdMwfYBtE3YBTTHhoeuUrDBPZmbQaxWAqSALV/MeEnR5z1xd8UKud2RAkFoPkmB+hli1TZSnyi84xz1vQ==}
     engines: {node: '>=18'}
+    deprecated: Use @exodus/bytes instead for a more spec-conformant and faster implementation
 
   whatwg-mimetype@4.0.0:
     resolution: {integrity: sha512-QaKxh0eNIi2mE9p2vEdzfagOKHCcj1pJ56EEHGQOVxp8r9/iszLUUV7v89x9O1p/T+NlTM5W7jW6+cz4Fq1YVg==}
